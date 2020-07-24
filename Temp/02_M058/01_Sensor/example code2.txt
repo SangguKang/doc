@@ -1,0 +1,20 @@
+#define Sensor 2
+#define LED 3
+
+void setup() {
+
+pinMode(Sensor,INPUT);
+pinMode(LED,OUTPUT);
+
+}
+
+void loop() {
+
+bool Detection = digitalRead(Sensor);
+
+if(Detection == HIGH)
+digitalWrite(LED,HIGH);
+if(Detection == LOW)
+digitalWrite(LED,LOW);
+
+}

@@ -1,0 +1,49 @@
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+
+// Set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+int Sensor = 12;   //Input Pin
+int LED = 3;     // Led pin for Indication
+int Buzzer =2;
+ 
+int flg = 0;  //Change detection flag
+void setup() {
+  
+  Serial.begin(9600);
+   lcd.init();    // initialize the lcd 
+     lcd.backlight();
+  // Turn on the blacklight and print a message.
+  pinMode (Sensor, INPUT);  //Define Pin as input
+  pinMode (Buzzer, OUTPUT);    //Led as OUTPUT
+  pinMode (LED, OUTPUT);    //Led as OUTPUT
+  Serial.println("Waiting for motion");
+}
+ 
+void loop() {
+  
+     int val = digitalRead(Sensor); //Read Pin as input
+     
+     if((val > 0) && (flg==0))
+     {
+        digitalWrite(LED, HIGH);
+        digitalWrite(Buzzer, HIGH);
+        
+        lcd.clear();
+        Serial.println("Motion Detected");
+          lcd.print("Motion Detected");
+        flg = 1;
+     }
+ 
+     if(val == 0)
+     {
+        digitalWrite(LED, LOW);
+        digitalWrite(Buzzer, LOW);
+        lcd.clear();
+          Serial.println("NO Motion");
+          lcd.print("NO Motion ");
+          
+        flg = 0;
+     }  
+     delay(100);
+}
