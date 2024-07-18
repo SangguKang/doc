@@ -2,10 +2,15 @@
 
 language="Korean"
 
-echo "I can speak $language"
-
-function print() {
-    echo $1
+function learn() {
+    learn_language="English"
+    echo "I am learning $learn_language"
 }
 
-print "I can speak English"
+function print() {
+    echo "I cna speak $1"
+}
+
+learn
+print $language
+print $learn_language
