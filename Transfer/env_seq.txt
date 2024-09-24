@@ -1,0 +1,84 @@
+ll
+pwd
+cd /
+ll
+git --version
+ifconfig
+_sel
+mkdir work
+cd work/
+mkdir ORAN
+git clone git@121.0.140.43:sw/d-oran.git d-oran
+git clone git@121.0.140.43:sw/d-oran.git d-oran2
+oran
+pwd
+cd ..
+ls
+cd work/
+ls
+rm -rf d-oran d-oran2
+cd ORAN/
+git clone git@121.0.140.43:sw/d-oran.git d-oran
+git clone git@121.0.140.43:sw/d-oran.git d-oran2
+oran
+pwd
+ls
+vi .gitmodules
+gitb
+exit
+ll
+cd work/
+ll
+cd ORAN/
+ll
+cd d-oran
+ll
+git br
+git branch
+sudo su -
+cp ~khlee/.bashrc .
+. .bashrc
+vi .bashrc
+cp ~khlee/.profile .
+vi .profile
+cp ~khlee/.profile .
+source .profile
+oran
+git branch -a
+git co DKK/DOCOMO/700M_2T2R
+git checout DKK/DOCOMO/700M_2T2R
+git checkout DKK/DOCOMO/700M_2T2R
+make update
+git cosuc
+git status
+git branch -a
+git log
+gitb
+cd m-plane_libs/
+cd ..
+git log
+j
+cd m-plane_libs/
+make clean
+ls
+./build.sh
+_sel
+./build.sh
+cm
+cd ..
+git status
+-------------------------------요기까지 진행해봄
+make clean
+cd configs/
+ls
+cd ..
+make rru
+cd configs/
+ls
+vi oiu_defconfig
+cd ..
+make rru
+make
+make clean
+make
+exit
