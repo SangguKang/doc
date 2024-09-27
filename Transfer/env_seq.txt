@@ -82,3 +82,11 @@ make
 make clean
 make
 exit
+
+
+-------------------------------- think
+dist clean
+make sim
+dmesg
+md, mm, ms?
+
