@@ -89,4 +89,12 @@ dist clean
 make sim
 dmesg
 md, mm, ms?
-
+make update
+_sel
+build.sh
+cm
+make rru
+rru_op?.pkg
+docker
+git submodules
+rpm command -> ex> rpm -ivh mgNetConfBrowser_2022-X.X-X.x86_64.rpm
