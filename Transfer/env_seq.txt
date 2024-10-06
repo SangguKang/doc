@@ -98,3 +98,12 @@ rru_op?.pkg
 docker
 git submodules
 rpm command -> ex> rpm -ivh mgNetConfBrowser_2022-X.X-X.x86_64.rpm
+
+
+-------------------------------- etc
+ChatGPT
+"이 문제를 해결하기 위해 어떤 접근 방식을 사용해야 할까요?"
+"이 개념에 대해 더 자세히 설명해 줄 수 있나요?"
+
+
+
