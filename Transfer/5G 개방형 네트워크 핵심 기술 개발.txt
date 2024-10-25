@@ -1,0 +1,64 @@
+5G 개방형 네트워크 핵심 기술 개발
+O-RAN 기반 5G 공유셀 기지국 장비 개발
+
+
+마이크로셀 지원 O-RU 소프트웨어 개발
+- 마이크로셀 O-RU 플랫폼 설계(100%)
+	- Interface 디자인
+	- 내부 Block 배치
+	- DTU 설계
+	- RFU 설계
+	- PSU 설계
+	- Filter 설계
+	- 모듈 제품 사진 및 성적서
+		- Unit 제작: DTU
+		- Unit 제작: RFU
+		- Unit 제작: PSU
+		- Unit 제작: Filter
+	- 장비 제품 사진
+- Digital Front End (DFE) 기능 블록(100%)
+	- 대역폭 200MHz 이상의 광대역 CFR 구현
+	- 대역폭 200MHz 이상의 광대역 DPD 연구 및 구현
+- RF Front End(RFE) 기능 블록(100%)
+	- 주파수: 700MHz ~ 5GHz
+	- 대역폭: 200MHz
+	- RFSoC 등 디바이스 솔루션 연구
+	- Evaluation 보드를 통한 핵심 기술 검증
+	- 200MHz DPD Test 결과
+- 광대역 O-RU 요구사항(100%)
+	- 200MHz 이상의 광대역 RF 대역폭 처리
+	- 25Gbps 이상의 fronthaul 전송 용량
+
+Cascade O-RU DL Copy / UL Combine 기능 개발
+- Cascade O-RU 동작을 위한 CUSM-Plane 기능 설계(100%)
+	- O-RAN.WG4.MP.0-v07.00 분석 및 설계 적용
+	- O-RAN.WG4.CUS.0-v07.00 분석 및 설계 적용
+- O-RAN 트래픽의 Cascade 전송을 위한 Fronhaul Interface 기능 및 Copy/Combine 기능 설계(100%)
+- Uplink Combine 지연 최적화 기술 설계(90%)
+- UL Combine 과정에서 발생하는 Uplink 노이저 저감 기술 설계(90%)
+	- RU, Channel, Carrier, Port 조합별 Selective Combine 기능 검토
+
+Cascade O-RU RTP / SyncE / Clock 기능 개발
+- 네트워크 요구 동기 성능, 기능 분석 및 구조 설계(100%)
+	- PTP(Precision Time Protocol) 및 프로파일 분석
+		- PTP T-TSC Standard and T-BC Standard
+			- Noise Generation: G.8273.2 Class B(Section 7.1)
+			- Noise Tolerance: G.8273.2 Section 7.2
+			- Noise Transfer: G.8273.2 Section 7.3
+			- Transient Response & Holdover: G.8273.2 Section 7.4
+		- Support profile: G8275.1, G8275.2
+	- 네트워크 요구 동기 성능 분석 및 규격화
+		- FPS(Full Time Support) 망의 지원 프로파일(ITU-T G.8275.1) 분석 및 시각 동기 성능 규격화
+- Cascade 구조에 따른 PTP / SyncE 요구사항 검토(100%)
+	- Cascade를 위한 PTP master 블록 설계
+		- 주요 설계 내용
+			- PTP master를 위한 FPGA master 8채널 구현 완료
+			- Event 블록 설계 구현(Sync, Follow-up, Request, Reply)
+			- Grand-Master의 정보와 상태를 연동 제어 설계
+
+
+
+
+
+
+khlee@samji.com

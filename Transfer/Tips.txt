@@ -1,0 +1,87 @@
+[Git]
+* Branch 변경 시 git status가 modified로 표시되는 문제
+	$ git submodule update --checkout
+	~/.gitconfig file의 [alias] 에 아래와 같이 alias를 추가하시면 이후 'git cosuc master', 'git cosuc jtower-5band'로 손쉽게 checkout & submodule update를 할 수 있습니다.  cosuc는 'CheckOut and Submodule Update Checkout'을 줄여서 쓴 것이지만 각자 편한 alias 이름을 지어주시면 되겠습니다.
+	[alias]
+    cosuc = !sh -c 'git checkout "$1" && git submodule update --checkout' -
+
+[Build - UQ-DAS]
+[17:04 0.47] kang39@WTH:ORAN $ git clone git@121.0.140.43:sw/uq-das/ap.git uq-das-test
+[17:08 1.44] kang39@WTH:ORAN $ cd uq-das-test/
+[17:09 0.51] kang39@WTH:uq-das-test $ git checkout 5g_shard_cell/master
+[17:16 0.11] kang39@WTH:uq-das-test $ make update
+[17:17 0.08] kang39@WTH:uq-das-test $ _sel
+1. arm-none-linux-gnueabi ( 4.3.2 2008q3-72 ) - ( T2200          )
+2. aarch64-xilinx-linux   ( 8.2.0  - 2019.1 ) - ( DKK NOKIA LGE  )
+3. aarch64-xilinx-linux   ( 11.2.0 - 2022.2 ) - ( UQ             )
+4. arm-none-linux-gnueabi ( 4.8.3           ) - ( JTower MU, HU  )
+5. aarch64-xilinx-linux   ( 9.2.0  - 2020.2 ) - ( JTOWER OIU)
+6. aarch64-xilinx-linux   ( 12.2.0 - 2023.1 ) - ( UQ[DPD], N-DAS MU-RU, J-TOWER R1 )
+7. aarch64-xilinx-linux   ( 12.2.0 - 2023.2 ) - ( UPLUS_5G_MB_VE )
+8. aarch64-xilinx-linux   ( 8.2.0  - 2019.1 ) - ( O-RAN(SSHv3)   )
+9. aarch64-xilinx-linux   ( 8.2.0  - 2020.1 ) - ( O-RAN(MONOCLOCK))
+10. arm-linux-gnueabi-gcc ( 7.5.0           ) - ( N-DAS HU       )
+11. aarch64-linux-gnu-gcc ( 8.2.0  - 2019.1 ) - ( DKK(old)A2K )
+6
+다음 명령어를 실행하세요
+
+. /opt/petalinux/2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux
+. /opt/petalinux/2023.1/settings.sh
+aarch64-xilinx-linux-gcc -v
+
+PATH => /opt/petalinux/2023.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/
+PetaLinux environment set to '/opt/petalinux/2023.1'
+[17:18 0.07] kang39@WTH:uq-das-test $ ll ./configs/
+합계 40
+drwxrwxr-x  2 kang39 kang39 4096 10월 25 17:10 .
+drwxrwxr-x 14 kang39 kang39 4096 10월 25 17:16 ..
+-rw-rw-r--  1 kang39 kang39  598 10월 25 17:10 glob_cfg.mk
+-rw-rw-r--  1 kang39 kang39 1593 10월 25 17:10 ru_n41_defconfig
+-rw-rw-r--  1 kang39 kang39 1543 10월 25 17:10 ru_n77_g_defconfig
+-rw-rw-r--  1 kang39 kang39 1666 10월 25 17:10 ru_n77_h_defconfig
+-rw-rw-r--  1 kang39 kang39 3327 10월 25 17:10 ru_nxx.mk
+-rw-rw-r--  1 kang39 kang39 1575 10월 25 17:08 sim_cmpl_defconfig
+-rw-rw-r--  1 kang39 kang39 3703 10월 25 17:10 sim_ru.mk
+-rw-rw-r--  1 kang39 kang39  571 10월 25 17:10 sim_ru_defconfig
+[17:19 0.07] kang39@WTH:uq-das-test $ make ru_n77_g
+Configuring for configs/ru_n77_g_defconfig
+[17:21 0.12] kang39@WTH:uq-das-test $ make
+ru_n77_g:       nlib compile
+ru_n77_g:       nlib install
+ru_n77_g:        hal compile
+ru_n77_g:        hal install
+ru_n77_g:        app compile
+ru_n77_g:        app install
+
+package: ru_n77_g_ap.pkg created.
+
+Device type   : RU_N77_G_AP
+Board name    : ru_n77_g
+Image type    : AP
+Image date    : 2024-10-25 17:23
+Image version : v3.0.2-17-gf208beed
+Image size    : 0x01da6000 (31088640)
+Image CRC     : 0xbc997064
+CPU           : ZU11EG
+USER          : u:kang39,c:ru_n77_g,b:5g_shard_cell/master
+
+
+
+
+
+
+[Temp]
+run_sim.sh
+branch: afe77xxd_sim~~
+cli command: ./scripts/run_sim.sh 실행 후 afe 명령
+
+VSCode: 해당 브랜치 디렉토리 위치에서 "code ."이라고 명령을 내리면 VSCode가 실행됨.
+
+비교 참고 브랜치: uplus_5g_mb_ve/master, n-das/master
+
+
+[daily cmd]
+dpkg, apt install, apt-get install
+
+
+

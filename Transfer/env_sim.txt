@@ -1,0 +1,84 @@
+gitk&
+ 1359  make sim_ru
+ 1360  make ru_sim
+ 1361  l configs/
+ 1362  ls configs/
+ 1363  make sim_ru
+ 1364  make update
+ 1365  cd ../
+ 1366  rm -rf afe77xxd/
+ 1367  git clone git@121.0.140.43:sw/uq-das/ap.git uq_das
+ 1368  cd uq_das/
+ 1369  l
+ 1370  ls
+ 1371  git checkout afe77xxd_sim_test
+ 1372  make update
+-------------------------------------------------------------< 컴파일 실패
+ 1373  cd ..
+ 1374  ll
+ 1375  history
+ 1376  :q
+ 1377  cd ..
+ 1378  ll
+ 1379  cd ..
+ 1380  vi .bash_history
+ 1381  ll
+ 1382  cd work/
+ 1383  ll
+ 1384  cd SIM/
+ 1385  ll
+ 1386  rm -rf uq_das/
+ 1387  ll
+ 1388  history
+ 1389  ll
+ 1390  git clone git@121.0.140.43:sw/uq-das/ap.git uq_das
+ 1391  cd uq_das/
+ 1392  git checkout afe77xxd_sim_test
+ 1393  make update
+ 1394  gitk&
+ 1395  sudo ./scripts/run_sim.sh
+ 1396  gcc --version
+ 1397  make
+ 1398  make sim_ru
+ 1399  make
+ 1400  sudo apt install libssh2-1-dev
+ 1401  make
+ 1402  sudo ./scripts/run_sim.sh
+ 1403  vi
+ 1404  cd hal/drivers/rfic/afe77xxd/
+ 1405  l
+ 1406  ls
+ 1407  cd api
+ 1408  gitk&
+ 1409  l
+ 1410  ls
+ 1411  cd Src/
+ 1412  l
+ 1413  ls
+ 1414  vi
+ 1415  cd ../.././/
+ 1416  cd ../../
+ 1417  l
+ 1418  cd ../../
+ 1419  ls
+ 1420  git br -a
+ 1421  git branch -a
+ 1422  git checkout n-das/master
+ 1423  git status
+ 1424  git cosuc
+ 1425  cd hal/drivers/rfic/afe79xx/
+ 1426  vi hal_afe79xx.c
+ 1427  vi ..
+ 1428  cd ../
+ 1429  l
+ 1430  ls
+ 1431  vi mxl16xx/
+ 1432  cd ../../
+ 1433  l
+ 1434  cd ..
+ 1435  l
+ 1436  ls
+ 1437  git branch -a
+ 1438  git checkout
+ 1439  git checkout uplus_5g_mb_ve/master
+ 1440  cd hal/drivers/rfic/
