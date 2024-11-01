@@ -1,3 +1,17 @@
+[Build]
+* UQ-DAS
+[17:04 0.47] kang39@WTH:ORAN $ git clone git@121.0.140.43:sw/uq-das/ap.git uq-das-test
+[17:08 1.44] kang39@WTH:ORAN $ cd uq-das-test/
+[17:09 0.51] kang39@WTH:uq-das-test $ git checkout 5g_shard_cell/master
+[17:16 0.11] kang39@WTH:uq-das-test $ make update
+[17:17 0.08] kang39@WTH:uq-das-test $ _sel
+6
+[17:18 0.07] kang39@WTH:uq-das-test $ ll ./configs/
+[17:19 0.07] kang39@WTH:uq-das-test $ make ru_n77_g
+Configuring for configs/ru_n77_g_defconfig
+[17:21 0.12] kang39@WTH:uq-das-test $ make
+
+
 [Git]
 * Branch 변경 시 git status가 modified로 표시되는 문제
 	$ git submodule update --checkout
@@ -5,65 +19,54 @@
 	[alias]
     cosuc = !sh -c 'git checkout "$1" && git submodule update --checkout' -
 
-[Build - UQ-DAS]
-[17:04 0.47] kang39@WTH:ORAN $ git clone git@121.0.140.43:sw/uq-das/ap.git uq-das-test
-[17:08 1.44] kang39@WTH:ORAN $ cd uq-das-test/
-[17:09 0.51] kang39@WTH:uq-das-test $ git checkout 5g_shard_cell/master
-[17:16 0.11] kang39@WTH:uq-das-test $ make update
-[17:17 0.08] kang39@WTH:uq-das-test $ _sel
-1. arm-none-linux-gnueabi ( 4.3.2 2008q3-72 ) - ( T2200          )
-2. aarch64-xilinx-linux   ( 8.2.0  - 2019.1 ) - ( DKK NOKIA LGE  )
-3. aarch64-xilinx-linux   ( 11.2.0 - 2022.2 ) - ( UQ             )
-4. arm-none-linux-gnueabi ( 4.8.3           ) - ( JTower MU, HU  )
-5. aarch64-xilinx-linux   ( 9.2.0  - 2020.2 ) - ( JTOWER OIU)
-6. aarch64-xilinx-linux   ( 12.2.0 - 2023.1 ) - ( UQ[DPD], N-DAS MU-RU, J-TOWER R1 )
-7. aarch64-xilinx-linux   ( 12.2.0 - 2023.2 ) - ( UPLUS_5G_MB_VE )
-8. aarch64-xilinx-linux   ( 8.2.0  - 2019.1 ) - ( O-RAN(SSHv3)   )
-9. aarch64-xilinx-linux   ( 8.2.0  - 2020.1 ) - ( O-RAN(MONOCLOCK))
-10. arm-linux-gnueabi-gcc ( 7.5.0           ) - ( N-DAS HU       )
-11. aarch64-linux-gnu-gcc ( 8.2.0  - 2019.1 ) - ( DKK(old)A2K )
-6
-다음 명령어를 실행하세요
+[Network]
+* UQ-DAS IP 설정
+fw_printenv
+fw_setenv ipaddr 192.168.1.89(할당받은 IP)
+fw_setenv serverip 192.168.1.57(my pc)
 
-. /opt/petalinux/2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux
-. /opt/petalinux/2023.1/settings.sh
-aarch64-xilinx-linux-gcc -v
+* SSH 자동 연결, TeraTerm
+192.168.50.219 /ssh2 /auth=password /user=kang39 /passwd=samji123
 
-PATH => /opt/petalinux/2023.1/sysroots/x86_64-petalinux-linux/usr/bin/aarch64-xilinx-linux/
-PetaLinux environment set to '/opt/petalinux/2023.1'
-[17:18 0.07] kang39@WTH:uq-das-test $ ll ./configs/
-합계 40
-drwxrwxr-x  2 kang39 kang39 4096 10월 25 17:10 .
-drwxrwxr-x 14 kang39 kang39 4096 10월 25 17:16 ..
--rw-rw-r--  1 kang39 kang39  598 10월 25 17:10 glob_cfg.mk
--rw-rw-r--  1 kang39 kang39 1593 10월 25 17:10 ru_n41_defconfig
--rw-rw-r--  1 kang39 kang39 1543 10월 25 17:10 ru_n77_g_defconfig
--rw-rw-r--  1 kang39 kang39 1666 10월 25 17:10 ru_n77_h_defconfig
--rw-rw-r--  1 kang39 kang39 3327 10월 25 17:10 ru_nxx.mk
--rw-rw-r--  1 kang39 kang39 1575 10월 25 17:08 sim_cmpl_defconfig
--rw-rw-r--  1 kang39 kang39 3703 10월 25 17:10 sim_ru.mk
--rw-rw-r--  1 kang39 kang39  571 10월 25 17:10 sim_ru_defconfig
-[17:19 0.07] kang39@WTH:uq-das-test $ make ru_n77_g
-Configuring for configs/ru_n77_g_defconfig
-[17:21 0.12] kang39@WTH:uq-das-test $ make
-ru_n77_g:       nlib compile
-ru_n77_g:       nlib install
-ru_n77_g:        hal compile
-ru_n77_g:        hal install
-ru_n77_g:        app compile
-ru_n77_g:        app install
+[PKG]
+* 배포 pkg - UQ-DAS
+\\192.168.50.220\통신개발팀\중계기\UQ NR DAS\3. SW\Image\ru_n77_g\10_솔리드배포\241001_V3.0.2
+ru_n77_g_bl-v1.0.0-0-ge4a5137.pkg
+ru_n77_g_os-v1.0.0-0-ge4a5137.pkg
+ru_n77_g_ap_v3.0.2-1-gefd1d4a0_241001A.pkg
 
-package: ru_n77_g_ap.pkg created.
+* update
+[13:18 0.00] kang39@WTH:uq-das-test $ cd out/
+[13:18 0.24] kang39@WTH:out $ ls
+app-ru_n77_g  autogen  ru_n77_g_ap.pkg
+>>copy해서 사용
+-----------------------------------------------
+// 다운로드
+(1) tftp
+장비에서 ap<enter>
+pc의 tftp 프로그램 기준으로 ./ru_n77_g/ru_n77_g_ap.pkg 을 다운로드함
+- path가 중요함
+(2) winscp
+winscp에서 장비에 /root에 
+pkg -i 파일명<enter>
+reboot
 
-Device type   : RU_N77_G_AP
-Board name    : ru_n77_g
-Image type    : AP
-Image date    : 2024-10-25 17:23
-Image version : v3.0.2-17-gf208beed
-Image size    : 0x01da6000 (31088640)
-Image CRC     : 0xbc997064
-CPU           : ZU11EG
-USER          : u:kang39,c:ru_n77_g,b:5g_shard_cell/master
+[PRIORITY]
+configs>glob_cfg.mk
+
+
+
+[SDK]
+* 설치
+\\192.168.50.220\통신개발팀\SW_Server\tools\PetaLinux 내부의 버전별 파일 선택 후 copy and paste
+petalinux-xxx.sh 실행 (권한이 필요하면 권한 설정)
+sourcing or _sel
+
+
+[Thread]
+n_pthread_create
+
+
 
 
 
@@ -74,14 +77,16 @@ USER          : u:kang39,c:ru_n77_g,b:5g_shard_cell/master
 run_sim.sh
 branch: afe77xxd_sim~~
 cli command: ./scripts/run_sim.sh 실행 후 afe 명령
-
+fw_printenv 
+fw_setenv disable_rpt_app	-> 수동 부팅. app실행을 일단 멈추고 부팅.
+rpt_app						-> 수동 부팅 후 app 실행.
 VSCode: 해당 브랜치 디렉토리 위치에서 "code ."이라고 명령을 내리면 VSCode가 실행됨.
 
 비교 참고 브랜치: uplus_5g_mb_ve/master, n-das/master
 
 
 [daily cmd]
-dpkg, apt install, apt-get install
+dpkg, apt install, apt-get install, ps -aef |grep rpt_app
 
 
 
