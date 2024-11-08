@@ -18,7 +18,17 @@ Configuring for configs/ru_n77_g_defconfig
 	~/.gitconfig file의 [alias] 에 아래와 같이 alias를 추가하시면 이후 'git cosuc master', 'git cosuc jtower-5band'로 손쉽게 checkout & submodule update를 할 수 있습니다.  cosuc는 'CheckOut and Submodule Update Checkout'을 줄여서 쓴 것이지만 각자 편한 alias 이름을 지어주시면 되겠습니다.
 	[alias]
     cosuc = !sh -c 'git checkout "$1" && git submodule update --checkout' -
+* head를 가리킬때
+kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das1/hal/drivers/rfic/afe77xxd/api$ git br
+* (HEAD detached at ff3fe31)
+  master
+kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git submodule init
+kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git submodule update
+kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git pull origin master
+kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git checkout master
 
+
+ 
 [Network]
 * UQ-DAS IP 설정
 fw_printenv
@@ -53,6 +63,17 @@ reboot
 
 [PRIORITY]
 configs>glob_cfg.mk
+
+[Simulator]
+* hal/mach/sim/OREADME.rst
+-. DKK 700MHz simulator(AFE7728D)
+아래 코드 추가 필요
+#ifdef CONFIG_MACH_SIM
+static uint8_t AFE77D_LIBS_RUN_MODE = AFE_LIBS_MISSION_MODE;
+#else
+static uint8_t AFE77D_LIBS_RUN_MODE = AFE_LIBS_SIMULATION_MODE;
+#endif
+
 
 
 
