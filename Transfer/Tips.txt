@@ -12,6 +12,18 @@ Configuring for configs/ru_n77_g_defconfig
 [17:21 0.12] kang39@WTH:uq-das-test $ make
 
 
+
+
+[CLI]
+app_sh
+
+sync -s
+net -h 0			: set reset by call-home hello timeout; 0:disable
+net -s
+log -d				: show log activation status
+
+
+
 [Git]
 * Branch 변경 시 git status가 modified로 표시되는 문제
 	$ git submodule update --checkout
@@ -38,6 +50,17 @@ fw_setenv serverip 192.168.1.57(my pc)
 * SSH 자동 연결, TeraTerm
 192.168.50.219 /ssh2 /auth=password /user=kang39 /passwd=samji123
 
+
+[ORAN Studio]
+원격 데스크톱 연결 - 192.168.50.144	ID:administrator PW:keysight4u
+bat 파일 실행
+	Start_M-Plane_Client_v7_100m_NP_SOLID_B4.bat
+		실행 전 NP에 맞는 파일 생성. 위 배치 파일에 생성된 파일 적용.
+		o-ran-uplane-conf-dynamic_bw_100m_4RX_rru.json
+		client_config_default_call_flow_np_solid.json
+		default_call_flow_default_np_solid.xml
+
+
 [PKG]
 * 배포 pkg - UQ-DAS
 \\192.168.50.220\통신개발팀\중계기\UQ NR DAS\3. SW\Image\ru_n77_g\10_솔리드배포\241001_V3.0.2
@@ -50,6 +73,8 @@ ru_n77_g_ap_v3.0.2-1-gefd1d4a0_241001A.pkg
 [13:18 0.24] kang39@WTH:out $ ls
 app-ru_n77_g  autogen  ru_n77_g_ap.pkg
 >>copy해서 사용
+
+hw/rru/rootfs/root/ 디렉토리에 파일을 갖다 놓고 make하면 pkg가 만들어지는데 이걸 장비에 인스톨하고 reboot하면 /root 디렉토리에 파일이 들어.
 -----------------------------------------------
 // 다운로드
 (1) tftp
@@ -82,13 +107,111 @@ static uint8_t AFE77D_LIBS_RUN_MODE = AFE_LIBS_SIMULATION_MODE;
 \\192.168.50.220\통신개발팀\SW_Server\tools\PetaLinux 내부의 버전별 파일 선택 후 copy and paste
 petalinux-xxx.sh 실행 (권한이 필요하면 권한 설정)
 sourcing or _sel
+* 프로젝트별(최근 프로젝트는 거의 6번임)
+-. DKK/DOCOMO/700M_2T2R:	6. aarch64-xilinx-linux   ( 12.2.0 - 2023.1 ) - ( UQ[DPD], N-DAS MU-RU, J-TOWER R1 )
+* setenv 관련
+disable_app = "app_start.sh start" 실행않함
+disable_rpt_app = "app_start.sh start" 실행하며, 그 내부에서 "rpt_app"만 실행않함.
+disable_rpt_app 상태로 linux 진입한 경우 "rpt_app"만 실행해서 문제점을 확인해 볼 수 있습니다.
+
+pkg -i oru_app.pkg 는 부팅 메시지에서 보이듯이 
+	install 'oru_ap.pkg.1' package ... OK 를 통해 root/디렉토리에 풀어 놓는 역할을 함.
+	override /media/cfg/rootfs to /
+	override /media/work/rootfs to /
+	
+	해당 디렉토리에 파일이 있는지 주의.
+
+[sync]
+[14:45 0.05] kang39@WTH:np-solid_master $ cd sync
+[14:46 0.04] kang39@WTH:sync $ git br
+* (HEAD 59c2208 위치에서 분리됨)
+  master
+[14:46 0.04] kang39@WTH:sync $ git checkout np_sync_v4.0.0
+[14:47 0.08] kang39@WTH:sync $ make
+
+++++++++++++++++++++++++++++++++++++ Hello User ++++++++++++++++++++++++++++++++++++
+Please source sync_timing_driver_env.sh to setup the build env before attempting to compile the code !!!
+
+Usage: source ./sync_timing_driver_env.sh <Optional Preset>
+Default Preset = default
+
+------------------------------------- Goodbye --------------------------------------
+
+exit 1
+Makefile:47: recipe for target 'sync_timing_check_env' failed
+make: *** [sync_timing_check_env] Error 1
+[14:47 0.08] kang39@WTH:sync $ source sync_timing_driver_env.sh
+[14:48 0.06] kang39@WTH:sync $ make
+.
+.
+.
+cp: 대상 './output/binaries' 은 디렉터리가 아님
+Makefile:33: recipe for target 'all' failed
+make: *** [all] Error 1
+[14:51 0.34] kang39@WTH:sync $ mkdir -p ./output/binaries
+[14:51 0.39] kang39@WTH:sync $ make
+[14:53 0.09] kang39@WTH:sync $ cd ..
+[14:53 0.06] kang39@WTH:np-solid_master $ ll
+[14:53 0.06] kang39@WTH:np-solid_master $ pwd
+/home/kang39/work/ORAN/np-solid_master
+[14:53 0.06] kang39@WTH:np-solid_master $ git st
+현재 브랜치 NP/SOLID/master
+브랜치가 'origin/NP/SOLID/master'에 맞게 업데이트된 상태입니다.
+
+커밋하도록 정하지 않은 변경 사항:
+  (무엇을 커밋할지 바꾸려면 "git add <파일>..."을 사용하십시오)
+  (작업 폴더의 변경 사항을 버리려면 "git checkout -- <파일>..."을 사용하십시오)
+
+        수정함:        sync_timing_driver/rootfs/usr/bin/esmcconfig
+        수정함:        sync_timing_driver/rootfs/usr/bin/ptp2config
+        수정함:        sync_timing_driver/rootfs/usr/bin/push_tod_on_pps
+        수정함:        sync_timing_driver/rootfs/usr/bin/sync_timing_core_driver
+        수정함:        sync_timing_driver/rootfs/usr/bin/sync_timing_esmc
+        수정함:        sync_timing_driver/rootfs/usr/bin/sync_timing_phc_synchronizer
+        수정함:        sync_timing_driver/rootfs/usr/bin/sync_timing_ptp2applib_tester
+        수정함:        sync_timing_driver/rootfs/usr/bin/sync_timing_ptp2stack
+        수정함:        sync_timing_driver/rootfs/usr/bin/sync_timing_util
+
+커밋할 변경 사항을 추가하지 않았습니다 ("git add" 및/또는 "git commit -a"를
+사용하십시오)
+
+
+
+
 
 
 [Thread]
 n_pthread_create
 
 
-
+[VSCode]
+indent 문제 발생 시(remote server 접속 시)
+	Ctrl+Shift+P → Preferences: Open Remote Settings (JSON)(SSH: 192.168.50.219) 선택.
+	settings.json 파일을 아래와 같이 수정
+	//저장시 문제 발생
+	{
+    "editor.tabSize": 8,         // Tabstop을 8로 설정
+    "editor.detectIndentation": false, // 자동 들여쓰기 감지 비활성화
+    "editor.insertSpaces": true, // 탭 대신 공백 삽입 비활성화
+    "editor.indentSize": 4,      // 들여쓰기 크기(Indent Size)를 4로 설정
+    "[c]": {
+        "editor.tabSize": 8,
+        "editor.insertSpaces": true,
+        "editor.indentSize": 4
+    },
+    "editor.autoIndent": "full"
+}
+//저장해도 문제가 발생하지 않음.
+{
+	"[c]": {
+		"editor.tabsize": 8, // Tabstop을 8로 설정
+		"editor.indentSize": 4,
+		"editor.insertSpaces": true, //스페이스로 들여쓰기. 탭 키를 누르면 4개의 스페이스가 삽입.
+		"editor.detectIndentation": false, // 자동 들여쓰기 감지 비활성화
+		"editor.formatOnSave": false // 저장 시 자동 서식 비활성화
+	},
+	"editor.autoIndent": "full"
+}
 
 
 
@@ -101,9 +224,16 @@ cli command: ./scripts/run_sim.sh 실행 후 afe 명령
 fw_printenv 
 fw_setenv disable_rpt_app	-> 수동 부팅. app실행을 일단 멈추고 부팅.
 rpt_app						-> 수동 부팅 후 app 실행.
-VSCode: 해당 브랜치 디렉토리 위치에서 "code ."이라고 명령을 내리면 VSCode가 실행됨.
 
 비교 참고 브랜치: uplus_5g_mb_ve/master, n-das/master
+
+주기적으로 reboot할 때
+	boot mode로 진입: RU
+	rru> setenv disable_app 1
+	rru> reset
+
+__maybe_unused => 사용하지 않을 수도 있음을 명시. 컴파일 warnning을 방지하기 위해. 예) int functionxxx(int input __maybe_unused) 식으로 사용할 수 있음.
+
 
 
 [daily cmd]
