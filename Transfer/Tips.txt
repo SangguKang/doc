@@ -11,17 +11,53 @@
 Configuring for configs/ru_n77_g_defconfig
 [17:21 0.12] kang39@WTH:uq-das-test $ make
 
+* m-plane_libs
+make clean
+./build.sh	(_sel)
+~tar.gz
 
 
 
 [CLI]
 app_sh
+sysrepoctl -l		: 운용 module
 
 sync -s
 net -h 0			: set reset by call-home hello timeout; 0:disable
-net -s
+net -s				:
+net -o				: set o-ran-studio interworking mac_address
 log -d				: show log activation status
+log -s warn			:
+mt -s				: software download, install, active | freeFTPd Settings 실행시켜 놓고
+user -s				: oran user/password
 
+
+[Conformance Test]
+ORAN M-plane specification version과 ORAN conformance test version을 일치시킨 후 비교하면서. 두 문서간 항목이 일치하면 맞는 것으로 볼 수 있다.
+MAC Address 설정 일치 확인: net -s | net -o | ORAN Studio | fw_printenv | ifconfig cpri0 interface
+	-. 실제 납품 장비 테스트 시 다시 문의할 것
+<create-subscription> 구독 <-> noti -> noti를 받으려면 필요
+<infinite-run>
+<filter-type> get filter 설정을 통해 원하는 내용 get 가능
+troubleshooting -> log 가져오기
+ProgramData/Keysight/MPlane/Client/ConformanceTest_batchs 이용해서 테스트 -> 맞는 버전은 문의해서 선정. 카피 후 수정해서 테스트.
+	log 폴더에서 각 테스트 항목별로 확인
+
+
+
+ConformanceTest_batchs_7.0-NP_SOLID 디렉토리 생성 - copy from ConformanceTest_batchs_7.0
+	C:\ProgramData\Keysight\MPlane\Client\ConformanceTest_batchs_7.0-NP_SOLID
+v7_np_solid 디렉토리 생성 - copy from v7_nokia
+	C:\ProgramData\Keysight\MPlane\Client\duprofile\v7_np_solid
+
+DhcpServer.bat -> 그대로 사용. Start_DHCP_Server_v7_np_solid.bat 파일을 실행시키면 자동으로 실행됨.
+MPlaneClient.bat -> 그대로 사용
+00_Start_DHCP_Server_v7_np_solid.bat -> 생성. duprofile/v7_np_solid 수정
+
+<sequence>
+1. 00_Start_DHCP_Server_v7_np_solid.bat
+2. MPlaneClient.bat
+3. 
 
 
 [Git]
@@ -50,9 +86,38 @@ fw_setenv serverip 192.168.1.57(my pc)
 * SSH 자동 연결, TeraTerm
 192.168.50.219 /ssh2 /auth=password /user=kang39 /passwd=samji123
 
+[OS]
+* boot message에 많은 정보가 있다.
+	Zynq MP First Stage Boot Loader
+	Release 2023.1   May  1 2023  -  00:38:12
+	MultiBootOffset: 0x340
+	Reset Mode      :       System Reset
+	Platform: Silicon (4.0), Running on A53-0 (64-bit) Processor, Device Name: XCZU11EG
+	Ethernet PHY reset (MIO62)
+	QSPI 32 bit Boot Mode
+	FlashID=0x20 0xBB 0x21
+	FLD_BL_1: ver=v1.0.0, date=0x676152AA
+	FLD_BL_2: ver=v0.0.0, date=0x0
+	Non authenticated Bitstream download to start now
+	PL Configuration done successfully
+
+  install 'oru_ap.pkg.1' package ... OK
+  override /media/cfg/rootfs to /
+  override /media/work/rootfs to /
+
+* xsa 파일은 압축된 파일일뿐. 풀어보면 fpga bit file 외에 top 파일 등등이 있음.
+	* device-tree
+	* md
+	* mm
+	* fpga -d
+
 
 [ORAN Studio]
 원격 데스크톱 연결 - 192.168.50.144	ID:administrator PW:keysight4u
+bat파일: ProgramData/Keysight/MPlane/Client
+Profile: ProgramData/Keysight/MPlane/Client/duprofile/v7_np
+
+MPlaneClient.bat 실행: ProgramData/Keysight/MPlane/Client
 bat 파일 실행
 	Start_M-Plane_Client_v7_100m_NP_SOLID_B4.bat
 		실행 전 NP에 맞는 파일 생성. 위 배치 파일에 생성된 파일 적용.
@@ -60,6 +125,8 @@ bat 파일 실행
 		client_config_default_call_flow_np_solid.json
 		default_call_flow_default_np_solid.xml
 
+uc -s	: user plane
+	parameter 및 config 값이 제대로 보여야 RF 출력이 나감.
 
 [PKG]
 * 배포 pkg - UQ-DAS
@@ -175,7 +242,21 @@ make: *** [all] Error 1
 커밋할 변경 사항을 추가하지 않았습니다 ("git add" 및/또는 "git commit -a"를
 사용하십시오)
 
+root@oru:~# sync_timing_util -P 0 -I 2
+optarg = 0, PllId = 0
+optarg = 2, InputId = 2
+gSyncTimingUtilInfo.SyncTimingUtilOpn = 26
+----- PLL INPUT SELECT SET SUCCESSFULLY -----
+root@oru:~# sync_timing_util -P 0
+optarg = 0, PllId = 0
+gSyncTimingUtilInfo.SyncTimingUtilOpn = 22
 
+*************************************************************************
+----- PLL STATUS (0x01) OBTAINED SUCCESSFULLY -----
+---------- STATUS_PLL_LOCKED
+---------- Current PLL Input = SYNC_TIMING_CLOCKADJ_PLL_INPUT_SELECT_IN2
+
+************************************************************************
 
 
 
@@ -239,5 +320,6 @@ __maybe_unused => 사용하지 않을 수도 있음을 명시. 컴파일 warnnin
 [daily cmd]
 dpkg, apt install, apt-get install, ps -aef |grep rpt_app
 
-
+secureBoot
+Neovim
 
