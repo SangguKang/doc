@@ -59,6 +59,20 @@ MPlaneClient.bat -> 그대로 사용
 2. MPlaneClient.bat
 3. 
 
+[Devices]
+root@oru:~# ls -l ../sys/bus/platform/devices/*.i2c*
+lrwxrwxrwx    1 root     root             0 Nov 11 23:25 ../sys/bus/platform/devices/a0040000.i2c -> ../../../devices/platform/amba_pl@0/a0040000.i2c		//rfu temp?
+lrwxrwxrwx    1 root     root             0 Nov  8 23:00 ../sys/bus/platform/devices/a0050000.i2c -> ../../../devices/platform/amba_pl@0/a0050000.i2c		//sfp0
+lrwxrwxrwx    1 root     root             0 Nov 11 23:25 ../sys/bus/platform/devices/a0080000.i2c -> ../../../devices/platform/amba_pl@0/a0080000.i2c		//sfp1
+lrwxrwxrwx    1 root     root             0 Nov 11 23:25 ../sys/bus/platform/devices/a0090000.i2c -> ../../../devices/platform/amba_pl@0/a0090000.i2c		//sfp2
+lrwxrwxrwx    1 root     root             0 Nov 11 23:25 ../sys/bus/platform/devices/a00a0000.i2c -> ../../../devices/platform/amba_pl@0/a00a0000.i2c		//sfp3
+lrwxrwxrwx    1 root     root             0 Nov 11 23:25 ../sys/bus/platform/devices/ff020000.i2c -> ../../../devices/platform/axi/ff020000.i2c
+lrwxrwxrwx    1 root     root             0 Nov  8 23:00 ../sys/bus/platform/devices/ff030000.i2c -> ../../../devices/platform/axi/ff030000.i2c				//dtu temp?
+
+[File/Source]
+*추가
+hal.mk
+src-$(CONFIG_DEV_JESD) += $(SRC_DIR)/hal_jesd.c
 
 [Git]
 * Branch 변경 시 git status가 modified로 표시되는 문제
@@ -315,6 +329,9 @@ rpt_app						-> 수동 부팅 후 app 실행.
 
 __maybe_unused => 사용하지 않을 수도 있음을 명시. 컴파일 warnning을 방지하기 위해. 예) int functionxxx(int input __maybe_unused) 식으로 사용할 수 있음.
 
+[WSL]
+*탐색기
+	explorer.exe .
 
 
 [daily cmd]
