@@ -90,6 +90,9 @@ kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/ap
 kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git checkout master
 
 
+[log]
+app_log_write(g_log.oran, "center freq : %.0fHz",fc);//media/log/oran.log에 저장됨
+
  
 [Network]
 * UQ-DAS IP 설정
