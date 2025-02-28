@@ -1,0 +1,43 @@
+******************************************
+
+******************************************
+모든 O-RAN YANG 모델에서 사용되는 네임스페이스 형식은 다음과 같습니다. urn:o-ran:<모델명>:<모델번호>
+	-> YANG 모델에서 네임스페이스의 의미는? 사용 예는?
+
+libs/m-plane/aarch64/rootfs/opt/sysrepo/my_repository/yang/xxxx@xxxx.yang 파일의 역할. 사용 예.
+	-> yang 라이브러리?
+
+"O-RU 컨트롤러가 O-RU로부터 YANG 라이브러리 정보를 수신"한다고 spec에 되어 있는데 의미는?
+
+NETCONF를 설명해봐 -> 통신/YANG 모듈을 이용한/?
+
+Call Home 기능을 설명해봐. 왜 하는건지도 설명해봐. -> 1. NETCONF 서버가 클라이언트에 먼저 연결을 요청해야 해서? 2. SSH session 연결을 통한 보안?
+
+NETCONF Hello 메시지 설명해봐 -> 서로간의 capability교환?
+
+* callback function의 쓰임은 확실히 이해했는지 설명해봐
+* lyd_new_path 함수에 대해 설명해봐
+
+* 바인딩이 뭐야?
+
+* clone, patch는 어떤 차이가 있어?
+
+* LLS-M (Lower-Layer Split M-plane)의 역할은 뭐야?
+
+* API 개념과 실제 사용 예를 설명해봐
+
+* shell script 분석 및 사용에 대해 설명해봐 -> lib 등등 따로 컴파일하고 적용하는 방법을 알고 있어?
+
+* M-plane VLAN은 뭐고 C/U-Plane VLAN은 뭐야?
+
+
+
+
+
+
+
+
+
+
+
+
