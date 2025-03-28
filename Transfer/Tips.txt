@@ -219,6 +219,16 @@ pkg -i oru_app.pkg 는 부팅 메시지에서 보이듯이
 	
 	해당 디렉토리에 파일이 있는지 주의.
 
+* 2024.2
+남수석님: "JTOWER 3.1 VE" 는 PetaLinux 2024.2 로 개발됩니다.  관련 개발자분들은 아래 경로에 app 개발용으로 올려둔 petalinux-v2024.2-sdk-v1.* 를 사용하시기 바랍니다.
+https://samjielec.sharepoint.com/:f:/s/SW/Eq6hrhwsnGJNrVuWm8q1pcQBVH6xdL7JHF8q7ZkX6tbKWA?e=vxSBP2
+
+김책임님: 남수석님께서 전달해주신 petalinux 2024.2 sdk 관련하여 
+219번 서버 사용하시는 분들께서는 /tftpboot/profile_250319 파일에 내용 추가해 놓았습니다. 
+필요하신 분들께서는 적용하시기 바랍니다.
+
+
+
 [sync]
 [14:45 0.05] kang39@WTH:np-solid_master $ cd sync
 [14:46 0.04] kang39@WTH:sync $ git br
@@ -272,6 +282,11 @@ make: *** [all] Error 1
 
 커밋할 변경 사항을 추가하지 않았습니다 ("git add" 및/또는 "git commit -a"를
 사용하십시오)
+
+//build 후 만들어진 파일은 어디로???
+sync_timing_driver/rootfs/usr/bin/ <-- sync driver compile 후 output/binaries/아래 bin 파일을 이곳에 업데이트. Makefile에 의해 자동으로 업데이트 됨.
+sync_timing_driver/rootfs/etc/sync_timing_esmc_default.conf <-- config 파일은 여기에???
+app/oru/rootfs/oru/root/si5518/user_config.boot.bin <-- 이 파일은 무엇?
 
 root@oru:~# sync_timing_util -P 0 -I 2
 optarg = 0, PllId = 0
