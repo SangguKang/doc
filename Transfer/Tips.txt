@@ -88,6 +88,11 @@ lrwxrwxrwx    1 root     root             0 Nov  8 23:00 ../sys/bus/platform/dev
 hal.mk
 src-$(CONFIG_DEV_JESD) += $(SRC_DIR)/hal_jesd.c
 
+
+[fpga]
+md 0xa00b0000 100
+mm 0xa00b0020 1
+
 [Git]
 * Branch 변경 시 git status가 modified로 표시되는 문제
 	$ git submodule update --checkout
@@ -143,7 +148,7 @@ fw_setenv serverip 192.168.1.57(my pc)
 	* fpga -d
 
 
-[ORAN Studio]
+[ORAN Studio - ORS]
 원격 데스크톱 연결 - 192.168.50.144	ID:administrator PW:keysight4u
 bat파일: ProgramData/Keysight/MPlane/Client
 Profile: ProgramData/Keysight/MPlane/Client/duprofile/v7_np
@@ -158,6 +163,24 @@ bat 파일 실행
 
 uc -s	: user plane
 	parameter 및 config 값이 제대로 보여야 RF 출력이 나감.
+
+troubleshooting
+M-plane Start 배치파일 실행 시 안될 때
+	ORS log 항상 먼저 체크
+		case1) Authentication (password) failed.
+			ssh 연결이 되는지 확인
+				teraterm에서 oran o-ran-password 로 연결이 안되면 문제가 있음
+			장비가 이리저리 돌아다니면서 찌꺼기가 있을 수 있음
+				mt -f 3으로 찌꺼기 제거
+		case2) ERROR Error while creating NetconfSession Negotiation failed.
+		       ERROR Negotiation failed.
+
+=> 1. hosts.csv 삭제 후 다시 
+=> 2. 그래도 안되면 ORS 전원 리셋
+
+
+
+
 
 [PKG]
 * 배포 pkg - UQ-DAS
@@ -287,6 +310,8 @@ make: *** [all] Error 1
 sync_timing_driver/rootfs/usr/bin/ <-- sync driver compile 후 output/binaries/아래 bin 파일을 이곳에 업데이트. Makefile에 의해 자동으로 업데이트 됨.
 sync_timing_driver/rootfs/etc/sync_timing_esmc_default.conf <-- config 파일은 여기에???
 app/oru/rootfs/oru/root/si5518/user_config.boot.bin <-- 이 파일은 무엇?
+https://kangsanggu74-1728864701657.atlassian.net/l/cp/s2vqyARj		<- confluence page 참조
+
 
 root@oru:~# sync_timing_util -P 0 -I 2
 optarg = 0, PllId = 0
@@ -303,8 +328,6 @@ gSyncTimingUtilInfo.SyncTimingUtilOpn = 22
 ---------- Current PLL Input = SYNC_TIMING_CLOCKADJ_PLL_INPUT_SELECT_IN2
 
 ************************************************************************
-
-
 
 
 [Thread]
@@ -340,6 +363,33 @@ indent 문제 발생 시(remote server 접속 시)
 	"editor.autoIndent": "full"
 }
 
+갑자기 remote-ssh 연결이 안될 때, Update: Mode Auot Update를 None으로 해 주지 않아 자동으로 업데이트되어 문제가 발생.
+vscode를 완전 삭제:
+	Win + r
+	appwiz.cpl
+	목록에서 Visual Studio Code 찾아 선택 후 제거
+잔여 파일 삭제 (.ssh폴더, .vscode폴더, AppData/Roaming/Code 폴더)하고, 
+	사용자/USER/.vscode
+	사용자/USER/.ssh
+	사용자/USER/AppData/Roaming/Code
+이전 버전(tools에 있음:VSCodeUserSetup-x64-1.93.1.exe)을 재설치.
+자동업데이트 비활성화
+	방법 1)
+		Ctrl + ,
+		검색창에 update 입력
+		Update: Mode 설정을 None으로 변경
+		Enable Windows Background Updates 체크 해제 ?
+	방법 2)
+		Ctrl + Shift + p
+		Preferences: Open User Settingds (json)
+			"update.mode": "none",
+			"extensions.autoUpdate": false,
+			"extensions.autoCheckUpdates": false,
+reboot 이후 버전이 다시 변경된다면 잔여 파일을 지우고 이전버전으로 재설치.
+
+Settings에서 Update 검색 후 None으로 변경. 이때 VSCode 재기동 하지 않아야 함.
+remote-ssh, remote development 확장 설치(Auto update 안함 체크) - Remote Explorer/Remote Tunnels 자동 설치됨?
+
 
 
 
@@ -357,9 +407,58 @@ rpt_app						-> 수동 부팅 후 app 실행.
 주기적으로 reboot할 때
 	boot mode로 진입: RU
 	rru> setenv disable_app 1
+	rru> saveenv
 	rru> reset
 
+Enter passwd in 2 secs to stop autoboot
+--> oru 입력
+oru>
+
 __maybe_unused => 사용하지 않을 수도 있음을 명시. 컴파일 warnning을 방지하기 위해. 예) int functionxxx(int input __maybe_unused) 식으로 사용할 수 있음.
+
+
+[troubleshooting]
+* reboot 현상이 일어날 때, fpga와 app상 어느쪽 문제인지 찾으려면 app을 죽이고 수동으로 설정을 하면서 살펴본다.
+* 아래는 s-plane을 enable했을 때 죽는 현상에 대한 원인 찾기의 한 방법. os를 변경해가면서 테스트. os는 테스트용으로 secondary를 변경해 놓은 상태.
+root@oru:~# fw_setenv disable_rpt_app 1
+root@oru:~# reboot
+oru> printenv
+oru> run sj_os_sec
+root@oru:~# ifconfig
+root@oru:~# ifconfig eth1 10.10.10.2 up
+root@oru:~# ifconfig
+root@oru:~# mm 0xa00b0020 1
+root@oru:~# ver
+root@oru:~# cat /etc/rev.os		//현재 적용된 버전 확인
+root@oru:~# ifconfig eth2 10.10.11.2 up
+root@oru:~# ifconfig
+
+root@oru:~# pkg
+root@oru:~# pkg -f os		//Fallback OS
+root@oru:~# ver
+
+oru> setenv disable_rpt_app 1
+oru> saveenv
+oru> reset
+root@oru:~# ifconfig eth1 10.10.10.2 up
+root@oru:~# mm 0xa00b0020 1
+a00b0020: 00000050 = 1
+root@oru:~# [   32.189434] Internal error: synchronous external abort: 0000000096000210 [#1] PREEMPT SMP
+oru> run sj_os_sec
+root@oru:~# ifconfig eth1 10.10.10.2 up
+root@oru:~# mm 0xa00b0020 1
+a00b0020: 00000050 = 1
+root@oru:~#
+
+* MAC address 변경
+ifconfig cpri0 hw ether 98:03:9b:98:7e:da
+
+
+
+[Util]
+stat_e1.sh	=> packet count
+<tcpdump>장비에서 실행
+root@oru:~# tcpdump -i cpri0 -w bb
 
 [WSL]
 *탐색기
@@ -371,4 +470,9 @@ dpkg, apt install, apt-get install, ps -aef |grep rpt_app
 
 secureBoot
 Neovim
+
+ChatGPT
+- ID : samjigpt3@gmail.com 
+- P/W : #!samji01883  
+
 
