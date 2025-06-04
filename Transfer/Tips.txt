@@ -11,6 +11,48 @@
 Configuring for configs/ru_n77_g_defconfig
 [17:21 0.12] kang39@WTH:uq-das-test $ make
 
+* NP/SOLID/master
+[10:15 0.61] kang39@WTH:NP $ git clone git@121.0.140.43:sw/d-oran.git np-solid
+[10:17 1.43] kang39@WTH:NP $ cd np-solid/
+[10:22 0.70] kang39@WTH:np-solid $ git br
+[10:22 0.64] kang39@WTH:np-solid $ git checkout NP/SOLID/master
+[10:18 0.47] kang39@WTH:np-solid $ make update
+[10:24 0.58] kang39@WTH:np-solid $ cd sync
+[10:24 0.58] kang39@WTH:sync $ git br
+* (HEAD 59c2208 위치에서 분리됨)
+  master
+[10:26 0.31] kang39@WTH:sync $ git checkout np_sync_v4.0.0
+[10:27 0.26] kang39@WTH:np-solid $ _sel
+1. arm-none-linux-gnueabi ( 4.3.2 2008q3-72 ) - ( T2200          )
+2. aarch64-xilinx-linux   ( 8.2.0  - 2019.1 ) - ( DKK NOKIA LGE  )
+3. aarch64-xilinx-linux   ( 11.2.0 - 2022.2 ) - ( UQ             )
+4. arm-none-linux-gnueabi ( 4.8.3           ) - ( JTower MU, HU  )
+5. aarch64-xilinx-linux   ( 9.2.0  - 2020.2 ) - ( JTOWER OIU)
+6. aarch64-xilinx-linux   ( 12.2.0 - 2023.1 ) - ( UQ[DPD], N-DAS MU-RU, J-TOWER R1 )
+7. aarch64-xilinx-linux   ( 12.2.0 - 2023.2 ) - ( UPLUS_5G_MB_VE )
+8. aarch64-xilinx-linux   ( 8.2.0  - 2019.1 ) - ( O-RAN(SSHv3)   )
+9. aarch64-xilinx-linux   ( 8.2.0  - 2020.1 ) - ( O-RAN(MONOCLOCK))
+10. arm-linux-gnueabi-gcc ( 7.5.0           ) - ( N-DAS HU       )
+11. aarch64-linux-gnu-gcc ( 8.2.0  - 2019.1 ) - ( DKK(old)A2K )
+6
+[10:27 0.24] kang39@WTH:np-solid $ ll ./configs/
+합계 24
+drwxrwxr-x  2 kang39 kang39 4096  4월 29 10:23 .
+drwxrwxr-x 23 kang39 kang39 4096  4월 29 10:23 ..
+-rw-rw-r--  1 kang39 kang39 6888  4월 29 10:23 oru_defconfig					//--> defconfig를 제외한 oru로 make 해주어 config를 설정해야 한다.
+-rw-rw-r--  1 kang39 kang39 6964  4월 29 10:23 oru_jig_defconfig
+[10:28 0.15] kang39@WTH:np-solid $ make oru
+Configuring for configs/oru_defconfig
+[10:28 0.14] kang39@WTH:np-solid $ make
+
+* mxl_sierra
+//160 server
+kang39@porsche:~/work/LIBS/mxlsierra/buildroot$ make clean
+backup dl? -> 예) dl -> dl_20250513
+kang39@porsche:~/work/LIBS/mxlsierra/buildroot$ ./build.sh
+permission error 발생시 -> kang39@porsche:~/work/LIBS/mxlsierra/buildroot$ sudo chmod 777 /var/run/docker.sock
+
+
 * m-plane_libs
 ## 1. OVERVIEW
 M-plane 지원을 위한 라이브러리들과 프로그램들을 생성하는 방법을 설명한다.
@@ -107,6 +149,709 @@ kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/ap
 kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git submodule update
 kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git pull origin master
 kang39@BOOK-PVIEOTPVKE:~/worksub/SIM/sim-uq-das-org/hal/drivers/rfic/afe77xxd/api$ git checkout master
+
+* 이전 버전으로 돌아가 임시로 테스트할 때
+	git checkout <해시>
+
+* maxlinear
+
+[13:57 0.18] kang39@WTH:buildroot $ pwd
+/home/kang39/work/DEVICE/mxl_sierra/buildroot
+
+[13:16 0.37] kang39@WTH:mxl_sierra $ cd buildroot/
+[13:16 0.34] kang39@WTH:buildroot $ git remote -v									//-->remote 브랜치 상태
+origin  git@git.maxlinear.com:mxl_sierra/buildroot.git (fetch)
+origin  git@git.maxlinear.com:mxl_sierra/buildroot.git (push)
+ups     git@121.0.140.43:libs/mxl_sierra_buildroot.git (fetch)
+ups     git@121.0.140.43:libs/mxl_sierra_buildroot.git (push)
+//--> git br 해서 upstream 인지 확인?
+[13:16 0.34] kang39@WTH:buildroot $ git fetch --all									//-->모든 원격 저장소에서 데이터를 가져옴. origin과 ups의 새로운 커밋, 태그, 브랜치를 로컬에 동기화
+origin을(를) 가져오는 중
+remote: Enumerating objects: 389, done.
+remote: Counting objects: 100% (281/281), done.
+remote: Compressing objects: 100% (183/183), done.
+remote: Total 389 (delta 169), reused 92 (delta 91), pack-reused 108 (from 1)
+오브젝트를 받는 중: 100% (389/389), 130.24 MiB | 7.75 MiB/s, 완료.
+델타를 알아내는 중: 100% (192/192), 로컬 오브젝트 70개 마침.
+git.maxlinear.com:mxl_sierra/buildroot URL에서
+   15f7afcc..6e5dd682  master         -> origin/master
+ * [새로운 태그]       SW_1.8.9.0_RC3 -> SW_1.8.9.0_RC3
+ * [새로운 태그]       SW_1.7.8.0_RC3 -> SW_1.7.8.0_RC3
+ * [새로운 태그]       SW_1.8.9.0_RC1 -> SW_1.8.9.0_RC1
+ * [새로운 태그]       SW_1.8.9.0_RC2 -> SW_1.8.9.0_RC2
+ * [새로운 태그]       SW_1.8.9.1_RC1 -> SW_1.8.9.1_RC1
+ups을(를) 가져오는 중
+remote: Enumerating objects: 24, done.
+remote: Counting objects: 100% (24/24), done.
+remote: Compressing objects: 100% (16/16), done.
+remote: Total 24 (delta 8), reused 24 (delta 8), pack-reused 0
+오브젝트 묶음 푸는 중: 100% (24/24), 완료.
+121.0.140.43:libs/mxl_sierra_buildroot URL에서
+ * [새로운 브랜치]     nsh/build       -> ups/nsh/build
+ * [새로운 브랜치]     nsh/jupiter-git -> ups/nsh/jupiter-git
+[13:27 0.34] kang39@WTH:buildroot $ git remote rename origin upstream
+[13:27 0.26] kang39@WTH:buildroot $ git remote rename ups origin					//-->푸시 대상 저장소 변경
+[13:27 0.40] kang39@WTH:buildroot $ git br -a
+  main
+  master
+* upstream
+  remotes/origin/main
+  remotes/origin/master
+  remotes/origin/nsh/build
+  remotes/origin/nsh/jupiter-git
+  remotes/origin/upstream
+  remotes/upstream/HEAD -> upstream/master
+  remotes/upstream/main
+  remotes/upstream/master
+[13:33 0.34] kang39@WTH:buildroot $ git push origin upstream/master:upstream			//로컬에서 추적중인 upstream/master 브랜치의 내용을 현재 origin의 upstream 브랜치에 푸시.
+오브젝트 개수 세는 중: 388, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (197/197), 완료.
+오브젝트 쓰는 중: 100% (388/388), 110.49 MiB | 14.92 MiB/s, 완료.
+Total 388 (delta 280), reused 281 (delta 174)
+remote: Resolving deltas: 100% (280/280), completed with 102 local objects.
+remote:
+remote: To create a merge request for upstream, visit:
+remote:   http://121.0.140.43/libs/mxl_sierra/buildroot/-/merge_requests/new?merge_request%5Bsource_branch%5D=upstream
+remote:
+remote:
+remote: Project 'libs/mxl_sierra_buildroot' was moved to 'libs/mxl_sierra/buildroot'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/buildroot.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_buildroot.git
+   15f7afcc..6e5dd682  upstream/master -> upstream
+[13:35 0.29] kang39@WTH:buildroot $ gitk origin/upstream
+[13:36 0.26] kang39@WTH:buildroot $ git pull
+[13:36 0.38] kang39@WTH:buildroot $ git br -a
+  main
+  master
+* upstream
+  remotes/origin/main
+  remotes/origin/master
+  remotes/origin/nsh/build
+  remotes/origin/nsh/jupiter-git
+  remotes/origin/upstream
+  remotes/upstream/HEAD -> upstream/master
+  remotes/upstream/main
+  remotes/upstream/master
+[13:38 0.25] kang39@WTH:buildroot $ git checkout master
+[13:39 0.42] kang39@WTH:buildroot $ git merge upstream									//-->git merge upstream/master를 쓰는 것이 보다 명확
+[13:40 0.48] kang39@WTH:buildroot $ git br
+  main
+* master
+  upstream
+[13:41 0.36] kang39@WTH:buildroot $ git merge origin/nsh/build
+자동 병합: package/mplane-server/mplane-server.mk
+충돌! (내용): package/mplane-server/mplane-server.mk에 병합 충돌
+제거: firmware/TFA/u-boot_withCRC.bin
+제거: firmware/TFA/u-boot.bin
+자동 병합: configs/mxl_sierra_nor_nand_inbuilding_defconfig
+자동 병합이 실패했습니다. 충돌을 바로잡고 결과물을 커밋하십시오.
+
+[13:41 0.28] kang39@WTH:buildroot $ gitk
+[13:44 0.18] kang39@WTH:buildroot $ git st
+[13:45 0.47] kang39@WTH:buildroot $ vi package/mplane-server/mplane-server.mk
+[13:46 0.37] kang39@WTH:buildroot $ git st
+[13:46 0.36] kang39@WTH:buildroot $ git add .
+[13:46 0.36] kang39@WTH:buildroot $ git st
+현재 브랜치 master
+브랜치가 'upstream/master'에 맞게 업데이트된 상태입니다.
+
+모든 충돌을 바로잡았지만 아직 병합하는 중입니다.
+  (병합을 마무리하려면 "git commit"을 사용하십시오)
+
+커밋할 변경 사항:
+
+        수정함:        .gitignore
+        새 파일:       .gitmodules
+        수정함:        Makefile
+        수정함:        configs/mxl_sierra_nor_nand_inbuilding_defconfig
+        삭제함:        firmware/TFA/u-boot.bin
+        삭제함:        firmware/TFA/u-boot_withCRC.bin
+        수정함:        goto_docker.sh
+        새 파일:       local.mk
+        수정함:        package/mplane-server/mplane-server.mk
+        새 파일:       sierra/linux_kernel
+        새 파일:       sierra/mplane-server
+        새 파일:       sierra/u-boot
+
+[13:46 0.36] kang39@WTH:buildroot $ git commit
+[master 105c668c] Merge remote-tracking branch 'origin/nsh/build'
+[13:48 0.21] kang39@WTH:buildroot $ git st
+현재 브랜치 master
+브랜치가 'upstream/master'보다 2개 커밋만큼 앞에 있습니다.
+  (로컬에 있는 커밋을 제출하려면 "git push"를 사용하십시오)
+
+커밋할 사항 없음, 작업 폴더 깨끗함
+[13:48 0.28] kang39@WTH:buildroot $ git br
+  main
+* master
+  upstream
+[13:49 0.31] kang39@WTH:buildroot $ git push origin --set-upstream master:master
+오브젝트 개수 세는 중: 9, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (9/9), 완료.
+오브젝트 쓰는 중: 100% (9/9), 918 bytes | 918.00 KiB/s, 완료.
+Total 9 (delta 7), reused 0 (delta 0)
+remote:
+remote: Project 'libs/mxl_sierra_buildroot' was moved to 'libs/mxl_sierra/buildroot'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/buildroot.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_buildroot.git
+   15f7afcc..105c668c  master -> master
+'master' 브랜치가 리모트의 'master' 브랜치를 ('origin'에서) 따라가도록 설정되었습니다.
+[13:50 0.18] kang39@WTH:buildroot $ git pull
+이미 업데이트 상태입니다.
+[13:50 0.21] kang39@WTH:buildroot $ git push
+Everything up-to-date
+[13:50 0.19] kang39@WTH:buildroot $ git push origin --tags
+오브젝트 개수 세는 중: 5, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (5/5), 완료.
+오브젝트 쓰는 중: 100% (5/5), 1.33 KiB | 1.33 MiB/s, 완료.
+Total 5 (delta 0), reused 5 (delta 0)
+remote:
+remote: Project 'libs/mxl_sierra_buildroot' was moved to 'libs/mxl_sierra/buildroot'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/buildroot.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_buildroot.git
+ * [new tag]           SW_1.7.8.0_RC3 -> SW_1.7.8.0_RC3
+ * [new tag]           SW_1.8.9.0_RC1 -> SW_1.8.9.0_RC1
+ * [new tag]           SW_1.8.9.0_RC2 -> SW_1.8.9.0_RC2
+ * [new tag]           SW_1.8.9.0_RC3 -> SW_1.8.9.0_RC3
+ * [new tag]           SW_1.8.9.1_RC1 -> SW_1.8.9.1_RC1
+
+
+
+[14:43 0.18] kang39@WTH:mxl_sierra $ cd linux_kernel/
+[14:43 0.17] kang39@WTH:linux_kernel $ git remote -v
+origin  git@git.maxlinear.com:mxl_sierra/linux_kernel.git (fetch)
+origin  git@git.maxlinear.com:mxl_sierra/linux_kernel.git (push)
+ups     git@121.0.140.43:libs/mxl_sierra_linux_kernel.git (fetch)
+ups     git@121.0.140.43:libs/mxl_sierra_linux_kernel.git (push)
+[14:43 0.19] kang39@WTH:linux_kernel $ git br -a
+  linux-release
+  main
+* upstream
+  remotes/origin/HEAD -> origin/linux-release
+  remotes/origin/linux-release
+  remotes/origin/main
+  remotes/ups/linux-release
+  remotes/ups/main
+  remotes/ups/upstream
+[14:45 0.16] kang39@WTH:linux_kernel $ git fetch --all
+origin을(를) 가져오는 중
+remote: Enumerating objects: 103, done.
+remote: Counting objects: 100% (103/103), done.
+remote: Compressing objects: 100% (103/103), done.
+remote: Total 103 (delta 52), reused 0 (delta 0), pack-reused 0 (from 0)
+오브젝트를 받는 중: 100% (103/103), 93.92 KiB | 339.00 KiB/s, 완료.
+델타를 알아내는 중: 100% (52/52), 완료.
+git.maxlinear.com:mxl_sierra/linux_kernel URL에서
+   a33253f0b..b1596d759  linux-release -> origin/linux-release
+ * [새로운 태그]         SW_1.7.8.0_RC3 -> SW_1.7.8.0_RC3
+ * [새로운 태그]         SW_1.8.9.0_RC1 -> SW_1.8.9.0_RC1
+ * [새로운 태그]         SW_1.8.9.0_RC2 -> SW_1.8.9.0_RC2
+ * [새로운 태그]         SW_1.8.9.0_RC3 -> SW_1.8.9.0_RC3
+ * [새로운 태그]         SW_1.8.9.1_RC1 -> SW_1.8.9.1_RC1
+ups을(를) 가져오는 중
+121.0.140.43:libs/mxl_sierra_linux_kernel URL에서
+ * [새로운 브랜치]       master     -> ups/master
+[14:53 0.31] kang39@WTH:linux_kernel $ git st
+현재 브랜치 upstream
+브랜치가 'ups/upstream'에 맞게 업데이트된 상태입니다.
+
+커밋할 사항 없음, 작업 폴더 깨끗함
+[14:53 0.31] kang39@WTH:linux_kernel $ git remote -v
+origin  git@git.maxlinear.com:mxl_sierra/linux_kernel.git (fetch)
+origin  git@git.maxlinear.com:mxl_sierra/linux_kernel.git (push)
+ups     git@121.0.140.43:libs/mxl_sierra_linux_kernel.git (fetch)
+ups     git@121.0.140.43:libs/mxl_sierra_linux_kernel.git (push)
+[14:53 0.24] kang39@WTH:linux_kernel $ git remote rename origin upstream
+[14:53 0.19] kang39@WTH:linux_kernel $ git remote rename ups origin
+[14:54 0.16] kang39@WTH:linux_kernel $ git br -a
+  linux-release
+  main
+* upstream
+  remotes/origin/linux-release
+  remotes/origin/main
+  remotes/origin/master
+  remotes/origin/upstream
+  remotes/upstream/HEAD -> upstream/linux-release
+  remotes/upstream/linux-release
+  remotes/upstream/main
+[14:54 0.25] kang39@WTH:linux_kernel $ git push origin upstream/linux-release:upstream
+오브젝트 개수 세는 중: 98, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (47/47), 완료.
+오브젝트 쓰는 중: 100% (98/98), 14.86 KiB | 3.72 MiB/s, 완료.
+Total 98 (delta 79), reused 70 (delta 51)
+remote:
+remote: To create a merge request for upstream, visit:
+remote:   http://121.0.140.43/libs/mxl_sierra/linux_kernel/-/merge_requests/new?merge_request%5Bsource_branch%5D=upstream
+remote:
+remote:
+remote: Project 'libs/mxl_sierra_linux_kernel' was moved to 'libs/mxl_sierra/linux_kernel'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/linux_kernel.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_linux_kernel.git
+   a33253f0b..b1596d759  upstream/linux-release -> upstream
+[14:57 0.27] kang39@WTH:linux_kernel $ gitk
+[14:58 0.34] kang39@WTH:linux_kernel $ gitk origin/upstream
+[14:59 0.22] kang39@WTH:linux_kernel $ git br
+  linux-release
+  main
+* upstream
+[14:59 0.19] kang39@WTH:linux_kernel $ git pull
+[14:59 0.26] kang39@WTH:linux_kernel $ git checkout linux-release
+'linux-release' 브랜치로 전환합니다
+브랜치가 'upstream/linux-release'보다 6개 커밋 뒤에 있고, 앞으로 돌릴 수 있습니다.
+  (로컬 브랜치를 업데이트하려면 "git pull"을 사용하십시오)
+[15:01 0.34] kang39@WTH:linux_kernel $ git merge upstream
+[15:01 0.34] kang39@WTH:linux_kernel $ git br
+* linux-release
+  main
+  upstream
+[15:01 0.29] kang39@WTH:linux_kernel $ git st
+현재 브랜치 linux-release
+브랜치가 'upstream/linux-release'에 맞게 업데이트된 상태입니다.
+
+커밋할 사항 없음, 작업 폴더 깨끗함
+[15:04 0.23] kang39@WTH:linux_kernel $ git merge origin/linux-release
+이미 업데이트 상태입니다.
+[15:06 0.30] kang39@WTH:linux_kernel $ git push origin --set-upstream linux-release:linux-release
+Total 0 (delta 0), reused 0 (delta 0)
+remote:
+remote: Project 'libs/mxl_sierra_linux_kernel' was moved to 'libs/mxl_sierra/linux_kernel'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/linux_kernel.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_linux_kernel.git
+   a33253f0b..b1596d759  linux-release -> linux-release
+'linux-release' 브랜치가 리모트의 'linux-release' 브랜치를 ('origin'에서) 따라가도록 설정되었습니다.
+[15:07 0.42] kang39@WTH:linux_kernel $ git pull
+이미 업데이트 상태입니다.
+[15:07 0.43] kang39@WTH:linux_kernel $ git push
+Everything up-to-date
+[15:07 0.39] kang39@WTH:linux_kernel $ git push origin --tags
+오브젝트 개수 세는 중: 5, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (4/4), 완료.
+오브젝트 쓰는 중: 100% (5/5), 958 bytes | 958.00 KiB/s, 완료.
+Total 5 (delta 1), reused 5 (delta 1)
+remote:
+remote: Project 'libs/mxl_sierra_linux_kernel' was moved to 'libs/mxl_sierra/linux_kernel'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/linux_kernel.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_linux_kernel.git
+ * [new tag]             SW_1.7.8.0_RC3 -> SW_1.7.8.0_RC3
+ * [new tag]             SW_1.8.9.0_RC1 -> SW_1.8.9.0_RC1
+ * [new tag]             SW_1.8.9.0_RC2 -> SW_1.8.9.0_RC2
+ * [new tag]             SW_1.8.9.0_RC3 -> SW_1.8.9.0_RC3
+ * [new tag]             SW_1.8.9.1_RC1 -> SW_1.8.9.1_RC1
+
+
+[15:23 0.34] kang39@WTH:mplane-server $ pwd
+/home/kang39/work/DEVICE/mxl_sierra/mplane-server
+[15:23 0.34] kang39@WTH:mplane-server $ git remote -v
+origin  git@git.maxlinear.com:mxl_sierra/mplane-server.git (fetch)
+origin  git@git.maxlinear.com:mxl_sierra/mplane-server.git (push)
+ups     git@121.0.140.43:libs/mxl_sierra_mplane-server.git (fetch)
+ups     git@121.0.140.43:libs/mxl_sierra_mplane-server.git (push)
+[15:23 0.45] kang39@WTH:mplane-server $ git br
+  main
+  master
+  mplane-release
+* upstream
+[15:23 0.41] kang39@WTH:mplane-server $ git fetch --all
+origin을(를) 가져오는 중
+remote: Enumerating objects: 195, done.
+remote: Counting objects: 100% (195/195), done.
+remote: Compressing objects: 100% (181/181), done.
+remote: Total 195 (delta 74), reused 0 (delta 0), pack-reused 0 (from 0)
+오브젝트를 받는 중: 100% (195/195), 150.87 KiB | 509.00 KiB/s, 완료.
+델타를 알아내는 중: 100% (74/74), 완료.
+git.maxlinear.com:mxl_sierra/mplane-server URL에서
+   f7ce4e9..6b4d263  master         -> origin/master
+ * [새로운 태그]     SW_1.8.9.0_RC2 -> SW_1.8.9.0_RC2
+ * [새로운 태그]     SW_1.8.9.0_RC3 -> SW_1.8.9.0_RC3
+ * [새로운 태그]     SW_1.7.8.0_RC3 -> SW_1.7.8.0_RC3
+ * [새로운 태그]     SW_1.8.9.0_RC1 -> SW_1.8.9.0_RC1
+ * [새로운 태그]     SW_1.8.9.1_RC1 -> SW_1.8.9.1_RC1
+ups을(를) 가져오는 중
+121.0.140.43:libs/mxl_sierra_mplane-server URL에서
+   fa8f815..f7ce4e9  main       -> ups/main
+[15:23 0.42] kang39@WTH:mplane-server $ git st
+현재 브랜치 upstream
+브랜치가 'ups/upstream'에 맞게 업데이트된 상태입니다.
+
+커밋할 사항 없음, 작업 폴더 깨끗함
+[15:23 0.51] kang39@WTH:mplane-server $ git remote rename origin upstream
+[15:24 0.40] kang39@WTH:mplane-server $ git remote rename ups origin
+[15:25 0.41] kang39@WTH:mplane-server $ git push origin upstream/master:upstream
+오브젝트 개수 세는 중: 190, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (103/103), 완료.
+오브젝트 쓰는 중: 100% (190/190), 42.86 KiB | 5.36 MiB/s, 완료.
+Total 190 (delta 141), reused 122 (delta 73)
+remote: Resolving deltas: 100% (141/141), completed with 68 local objects.
+remote:
+remote: To create a merge request for upstream, visit:
+remote:   http://121.0.140.43/libs/mxl_sierra/mplane-server/-/merge_requests/new?merge_request%5Bsource_branch%5D=upstream
+remote:
+remote:
+remote: Project 'libs/mxl_sierra_mplane-server' was moved to 'libs/mxl_sierra/mplane-server'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/mplane-server.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_mplane-server.git
+   f7ce4e9..6b4d263  upstream/master -> upstream
+[15:25 0.85] kang39@WTH:mplane-server $ gitk origin/upstream
+[15:26 0.44] kang39@WTH:mplane-server $ git pull
+업데이트 중 f7ce4e9..6b4d263
+Fast-forward
+ CMakeLists.txt                                                                 |   7 +++
+ UnitTest/inc/UnitTestAPI.h                                                     |   2 +-
+ UnitTest/src/UnitTestAPI.cpp                                                   |   4 +-
+ common/Alarm/inc/Alarm.h                                                       |  11 ++--
+ common/Alarm/src/Alarm.cpp                                                     |  25 +++++++-
+ common/fault/inc/Fault.h                                                       |   7 ++-
+ common/fault/src/Fault.cpp                                                     |  24 +++++++-
+ common/vcommoni/inc/IAlarm.h                                                   |   3 +
+ common/vcommoni/inc/IFault.h                                                   |   4 ++
+ hal/inc/HalAlarms.h                                                            |   3 +
+ hal/inc/HalApply.h                                                             |   9 +++
+ hal/inc/HalComponentCarrier.h                                                  |  45 +++++++-------
+ hal/inc/HalDelayManagement.h                                                   |   2 +-
+ hal/inc/HalGlobalData.h                                                        |   9 ++-
+ hal/inc/HalInterfaces.h                                                        |   4 +-
+ hal/inc/HalParamUtils.h                                                        |  62 +++++++++++++++++---
+ hal/inc/HalPerformanceManagement.h                                             |  18 ++++++
+ hal/inc/HalRxPowerPolling.h                                                    |  29 +++++++++
+ hal/inc/HalTempPolling.h                                                       |  63 +++++++++++++++-----
+ hal/sierra/src/HalAlarms.cpp                                                   | 204 +++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ hal/sierra/src/HalApply.cpp                                                    | 382 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-------------------------------------
+ hal/sierra/src/HalComponentCarrier.cpp                                         |  71 +++++++++++++---------
+ hal/sierra/src/HalDelayManagement.cpp                                          |   4 +-
+ hal/sierra/src/HalParamUtils.cpp                                               |  19 ++++++
+ hal/sierra/src/HalPerformanceManagement.cpp                                    |  45 ++++++++++++++
+ hal/sierra/src/HalRxPowerPolling.cpp                                           |  88 ++++++++++++++++++++++++++++
+ hal/sierra/src/HalTempPolling.cpp                                              | 139 +++++++++++++++++++++++++++++++------------
+ hal/sierra/src/HalUplaneConf.cpp                                               |   6 ++
+ services/oran-rrh/ImageManagement/src/HostOranOsImage.cpp                      |  12 ++--
+ yang-manager-server/OranAlarms/inc/OranAlarms.h                                |   7 +++
+ yang-manager-server/OranAlarms/inc/allAlarms.h                                 |   6 ++
+ yang-manager-server/OranAlarms/src/AmbientTemperatureViolationMinorAlarm.cpp   |   2 +-
+ yang-manager-server/OranAlarms/src/ConfigCriticalAlarm.cpp                     |  54 +++++++++++++++++
+ yang-manager-server/OranAlarms/src/HighTemperatureMajorAlarm.cpp               |   2 +-
+ yang-manager-server/OranAlarms/src/HighTemperatureMinorAlarm.cpp               |   2 +-
+ yang-manager-server/OranAlarms/src/LowTemperatureCriticalAlarm.cpp             |   2 +-
+ yang-manager-server/OranAlarms/src/LowTemperatureMinorAlarm.cpp                |   2 +-
+ yang-manager-server/OranAlarms/src/OranAlarms.cpp                              |   9 ++-
+ yang-manager-server/OranAlarms/src/RxOutOfOrderCriticalAlarm.cpp               |  49 ++++++++++++++++
+ yang-manager-server/OranAlarms/src/TxOutOfOrderCriticalAlarm.cpp               |  49 ++++++++++++++++
+ yang-manager-server/OranAlarms/src/UnitDangerouslyOverheatingCriticalAlarm.cpp |   2 +-
+ yang-manager-server/OranFaults/inc/OranFaults.h                                |  10 +++-
+ yang-manager-server/OranFaults/inc/allFaults.h                                 |  11 +++-
+ yang-manager-server/OranFaults/src/AmbientTemperatureViolationMinorFault.cpp   |   2 +-
+ yang-manager-server/OranFaults/src/ConfigCriticalFault.cpp                     |  45 ++++++++++++++
+ yang-manager-server/OranFaults/src/HighTemperatureMajorFault.cpp               |   2 +-
+ yang-manager-server/OranFaults/src/HighTemperatureMinorFault.cpp               |   2 +-
+ yang-manager-server/OranFaults/src/LowTemperatureCriticalFault.cpp             |   2 +-
+ yang-manager-server/OranFaults/src/LowTemperatureMinorFault.cpp                |   2 +-
+ yang-manager-server/OranFaults/src/OranFaults.cpp                              |  11 +++-
+ yang-manager-server/OranFaults/src/RxOutOfOrderCriticalFault.cpp               |  44 ++++++++++++++
+ yang-manager-server/OranFaults/src/TxOutOfOrderCriticalFault.cpp               |  44 ++++++++++++++
+ yang-manager-server/OranFaults/src/UnitDangerouslyOverheatingCriticalFault.cpp |   2 +-
+ yang-manager-server/OranFm/inc/OranFm.h                                        |  11 +++-
+ yang-manager-server/OranFm/src/OranFm.cpp                                      | 189 +++++++++++++++++++++++++++++++++++++++++------------------
+ yang-manager-server/oran-performancemgmt/src/PerformanceMgmtService.cpp        |  26 +++++++--
+ yang-manager-server/oran-performancemgmt/src/TransceiverMeasurement.cpp        |  36 ++++++++++++
+ yang-manager-server/oran-supervision/inc/MPlaneConnectivityService.h           |   5 +-
+ yang-manager-server/oran-supervision/src/MPlaneConnectivityService.cpp         |  13 +++--
+ yang-manager-server/vyms/inc/IPerformanceMgmt.h                                |   9 +++
+ yang-manager-server/vyms/inc/IYangCarrierMgr.h                                 |   3 +-
+ yang-manager-server/yang-config/YangConfig.xml                                 |   2 +-
+ yang-manager-server/yang-model-handlers/inc/OranFmHandler.h                    |   6 ++
+ yang-manager-server/yang-model-handlers/inc/OranYangCarrierMgr.h               |   3 +-
+ yang-manager-server/yang-model-handlers/src/CallbackORanSoftwareMgr.cpp        |   6 +-
+ yang-manager-server/yang-model-handlers/src/IetfInterfacesHandler.cpp          |  19 +++---
+ yang-manager-server/yang-model-handlers/src/OranDelayManagementHandler.cpp     |   4 +-
+ yang-manager-server/yang-model-handlers/src/OranFmHandler.cpp                  |  27 ++++++++-
+ yang-manager-server/yang-model-handlers/src/OranUplaneConfHandler.cpp          | 189 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ yang-manager-server/yang-model-handlers/src/OranYangCarrierMgr.cpp             | 131 +++++++++++++++++++++++++++--------------
+ yang-models/O-RAN.WG4.MP-YANGs-v9x.00/Common Models/System/o-ran-fm.yang       |  76 ++++++++++++++++++++++++
+ 71 files changed, 1935 insertions(+), 484 deletions(-)
+ create mode 100644 hal/inc/HalRxPowerPolling.h
+ create mode 100644 hal/sierra/src/HalRxPowerPolling.cpp
+ create mode 100644 yang-manager-server/OranAlarms/src/ConfigCriticalAlarm.cpp
+ create mode 100644 yang-manager-server/OranAlarms/src/RxOutOfOrderCriticalAlarm.cpp
+ create mode 100644 yang-manager-server/OranAlarms/src/TxOutOfOrderCriticalAlarm.cpp
+ create mode 100644 yang-manager-server/OranFaults/src/ConfigCriticalFault.cpp
+ create mode 100644 yang-manager-server/OranFaults/src/RxOutOfOrderCriticalFault.cpp
+ create mode 100644 yang-manager-server/OranFaults/src/TxOutOfOrderCriticalFault.cpp
+[15:26 0.41] kang39@WTH:mplane-server $ git br -a
+  main
+  master
+  mplane-release
+* upstream
+  remotes/origin/main
+  remotes/origin/master
+  remotes/origin/mplane-release
+  remotes/origin/upstream
+  remotes/upstream/HEAD -> upstream/master
+  remotes/upstream/main
+  remotes/upstream/master
+  remotes/upstream/mplane-release
+[15:27 0.50] kang39@WTH:mplane-server $ git checkout master
+'master' 브랜치로 전환합니다
+브랜치가 'upstream/master'보다 3개 커밋 뒤에 있고, 앞으로 돌릴 수 있습니다.
+  (로컬 브랜치를 업데이트하려면 "git pull"을 사용하십시오)
+[15:30 0.59] kang39@WTH:mplane-server $ git merge upstream
+[15:30 0.46] kang39@WTH:mplane-server $ git push origin --set-upstream master:master
+Total 0 (delta 0), reused 0 (delta 0)
+remote:
+remote: Project 'libs/mxl_sierra_mplane-server' was moved to 'libs/mxl_sierra/mplane-server'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/mplane-server.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_mplane-server.git
+   f7ce4e9..6b4d263  master -> master
+'master' 브랜치가 리모트의 'master' 브랜치를 ('origin'에서) 따라가도록 설정되었습니다.
+[15:32 0.35] kang39@WTH:mplane-server $ git push
+Everything up-to-date
+[15:32 0.37] kang39@WTH:mplane-server $ git push origin --tags
+오브젝트 개수 세는 중: 5, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (4/4), 완료.
+오브젝트 쓰는 중: 100% (5/5), 989 bytes | 989.00 KiB/s, 완료.
+Total 5 (delta 1), reused 5 (delta 1)
+remote:
+remote: Project 'libs/mxl_sierra_mplane-server' was moved to 'libs/mxl_sierra/mplane-server'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/mplane-server.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_mplane-server.git
+ * [new tag]         SW_1.7.8.0_RC3 -> SW_1.7.8.0_RC3
+ * [new tag]         SW_1.8.9.0_RC1 -> SW_1.8.9.0_RC1
+ * [new tag]         SW_1.8.9.0_RC2 -> SW_1.8.9.0_RC2
+ * [new tag]         SW_1.8.9.0_RC3 -> SW_1.8.9.0_RC3
+ * [new tag]         SW_1.8.9.1_RC1 -> SW_1.8.9.1_RC1
+
+
+
+[17:10 0.31] kang39@WTH:mxl_sierra $ cd u-boot/
+[17:10 0.37] kang39@WTH:u-boot $ git br
+  main
+* uboot-release
+  upstream
+[17:10 0.31] kang39@WTH:u-boot $ git remote -v
+origin  git@121.0.140.43:libs/mxl_sierra_u-boot.git (fetch)
+origin  git@121.0.140.43:libs/mxl_sierra_u-boot.git (push)
+upstream        git@git.maxlinear.com:mxl_sierra/u-boot.git (fetch)
+upstream        git@git.maxlinear.com:mxl_sierra/u-boot.git (push)
+[17:10 0.37] kang39@WTH:u-boot $ git checkout upstream
+warning: refname 'upstream' is ambiguous.
+'upstream' 브랜치로 전환합니다
+브랜치가 'origin/upstream'보다 1개 커밋 뒤에 있고, 앞으로 돌릴 수 있습니다.
+  (로컬 브랜치를 업데이트하려면 "git pull"을 사용하십시오)
+[17:11 0.36] kang39@WTH:u-boot $ git br
+  main
+  uboot-release
+* upstream
+[17:11 0.33] kang39@WTH:u-boot $ git pull
+업데이트 중 c2b105d5..1ba9dd7a
+Fast-forward
+ arch/arm/dts/Makefile                 |   1 +
+ board/maxlinear/sierra/sierra.c       | 300 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ configs/mxl_sierra_nor_nand_defconfig |   3 +-
+ configs/mxl_sierra_nor_nor_defconfig  |   3 +-
+ configs/mxl_sierra_tri_nor_defconfig  |   6 +-
+ drivers/mtd/mtd_uboot.c               |   2 +-
+ env/Kconfig                           |   8 +++
+ env/sf.c                              |  26 ++++++++
+ include/configs/mxl_sierra.h          | 565 +++++++++++++++++++++++++++++++++++++++++-----------------------------------------------------------------------------------------------------------------------
+ 9 files changed, 481 insertions(+), 433 deletions(-)
+[17:11 0.31] kang39@WTH:u-boot $ git fetch --all
+upstream을(를) 가져오는 중
+origin을(를) 가져오는 중
+[17:12 0.35] kang39@WTH:u-boot $ git push origin upstream/uboot-release:upstream
+Everything up-to-date
+[17:13 0.23] kang39@WTH:u-boot $ git checkout master
+'master' 브랜치가 리모트의 'master' 브랜치를 ('origin'에서) 따라가도록 설정되었습니다.
+새로 만든 'master' 브랜치로 전환합니다
+[17:13 0.32] kang39@WTH:u-boot $ git merge upstream												//-->git merge upstream/uboot-release이 적절함.
+warning: refname 'upstream' is ambiguous.
+warning: refname 'upstream' is ambiguous.
+업데이트 중 c2b105d5..1ba9dd7a
+Fast-forward
+ arch/arm/dts/Makefile                 |   1 +
+ board/maxlinear/sierra/sierra.c       | 300 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ configs/mxl_sierra_nor_nand_defconfig |   3 +-
+ configs/mxl_sierra_nor_nor_defconfig  |   3 +-
+ configs/mxl_sierra_tri_nor_defconfig  |   6 +-
+ drivers/mtd/mtd_uboot.c               |   2 +-
+ env/Kconfig                           |   8 +++
+ env/sf.c                              |  26 ++++++++
+ include/configs/mxl_sierra.h          | 565 +++++++++++++++++++++++++++++++++++++++++-----------------------------------------------------------------------------------------------------------------------
+ 9 files changed, 481 insertions(+), 433 deletions(-)
+[17:16 0.15] kang39@WTH:u-boot $ git push origin --set-upstream master:master
+Total 0 (delta 0), reused 0 (delta 0)
+remote:
+remote: To create a merge request for master, visit:
+remote:   http://121.0.140.43/libs/mxl_sierra/u-boot/-/merge_requests/new?merge_request%5Bsource_branch%5D=master
+remote:
+remote:
+remote: Project 'libs/mxl_sierra_u-boot' was moved to 'libs/mxl_sierra/u-boot'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/u-boot.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_u-boot.git
+   c2b105d5..1ba9dd7a  master -> master
+'master' 브랜치가 리모트의 'master' 브랜치를 ('origin'에서) 따라가도록 설정되었습니다.
+[17:17 0.29] kang39@WTH:u-boot $ git push origin --tags
+오브젝트 개수 세는 중: 4, 완료.
+Delta compression using up to 16 threads.
+오브젝트 압축하는 중: 100% (4/4), 완료.
+오브젝트 쓰는 중: 100% (4/4), 562 bytes | 562.00 KiB/s, 완료.
+Total 4 (delta 2), reused 0 (delta 0)
+remote:
+remote: Project 'libs/mxl_sierra_u-boot' was moved to 'libs/mxl_sierra/u-boot'.
+remote:
+remote: Please update your Git remote:
+remote:
+remote:   git remote set-url origin git@121.0.140.43:libs/mxl_sierra/u-boot.git
+remote:
+remote:
+To 121.0.140.43:libs/mxl_sierra_u-boot.git
+ * [new tag]           SW_1.7.8.0_RC3 -> SW_1.7.8.0_RC3
+ * [new tag]           SW_1.8.9.0_RC1 -> SW_1.8.9.0_RC1
+ * [new tag]           SW_1.8.9.0_RC2 -> SW_1.8.9.0_RC2
+ * [new tag]           SW_1.8.9.0_RC3 -> SW_1.8.9.0_RC3
+ * [new tag]           SW_1.8.9.1_RC1 -> SW_1.8.9.1_RC1
+
+-----------------------------------------------------------
+[13:48 0.57] kang39@WTH:work $ cd DEVICE/
+[13:48 0.52] kang39@WTH:DEVICE $ cd mxl_sierra/
+[13:48 0.52] kang39@WTH:mxl_sierra $ cd mplane-server/
+[13:48 0.41] kang39@WTH:mplane-server $ cd ..
+[13:48 0.42] kang39@WTH:mxl_sierra $ cd buildroot/
+[13:48 0.47] kang39@WTH:buildroot $ cd sierra/
+[13:49 0.34] kang39@WTH:sierra $ cd mplane-server/
+[13:49 0.31] kang39@WTH:mplane-server $ cd ..
+[13:49 0.34] kang39@WTH:sierra $ cd ..
+[13:49 0.34] kang39@WTH:buildroot $ make update
+[13:49 0.66] kang39@WTH:buildroot $ cd sierra/
+[13:50 0.61] kang39@WTH:sierra $ cd mplane-server/
+
+[13:50 0.51] kang39@WTH:mplane-server $ cd ..
+[13:50 0.43] kang39@WTH:sierra $ git checkout master
+이미 'master'에 있습니다
+브랜치가 'origin/master'에 맞게 업데이트된 상태입니다.
+[13:50 0.48] kang39@WTH:sierra $ git pull
+이미 업데이트 상태입니다.
+[13:51 0.53] kang39@WTH:sierra $ git log
+[13:51 0.44] kang39@WTH:sierra $ ls
+
+[13:51 0.44] kang39@WTH:sierra $ cd mplane-server/
+[13:51 0.45] kang39@WTH:mplane-server $ ls
+[13:51 0.45] kang39@WTH:mplane-server $ git log
+[13:51 0.38] kang39@WTH:mplane-server $ git br
+* (HEAD f7ce4e9 위치에서 분리됨)
+  master
+[13:52 0.25] kang39@WTH:mplane-server $ git checkout master
+[13:52 0.37] kang39@WTH:mplane-server $ git log
+[13:52 0.39] kang39@WTH:mplane-server $ cd ..
+[13:52 0.36] kang39@WTH:sierra $ cd ..
+[13:52 0.36] kang39@WTH:buildroot $ git st
+현재 브랜치 master
+브랜치가 'origin/master'에 맞게 업데이트된 상태입니다.
+
+커밋하도록 정하지 않은 변경 사항:
+  (무엇을 커밋할지 바꾸려면 "git add <파일>..."을 사용하십시오)
+  (작업 폴더의 변경 사항을 버리려면 "git checkout -- <파일>..."을 사용하십시오)
+
+        수정함:        sierra/mplane-server (새 커밋)
+
+커밋할 변경 사항을 추가하지 않았습니다 ("git add" 및/또는 "git commit -a"를
+사용하십시오)
+[13:54 0.28] kang39@WTH:buildroot $ git commit -a
+[14:08 0.05] kang39@WTH:buildroot $ git push
+------------------------------------------------------------
+[14:14 0.08] kang39@WTH:buildroot $ cd sierra/
+[14:14 0.06] kang39@WTH:sierra $ cd u-boot/
+[14:14 0.06] kang39@WTH:u-boot $ git br
+[14:14 0.05] kang39@WTH:u-boot $ git log
+[14:15 0.02] kang39@WTH:u-boot $ git br
+[14:15 0.02] kang39@WTH:u-boot $ git checkout master
+[14:16 0.01] kang39@WTH:u-boot $ git log
+[14:16 0.23] kang39@WTH:u-boot $ git st
+[14:16 0.21] kang39@WTH:u-boot $ cd ..
+[14:16 0.19] kang39@WTH:sierra $ git st
+[14:16 0.16] kang39@WTH:sierra $ cd ..
+[14:17 0.15] kang39@WTH:buildroot $ git st
+[14:17 0.15] kang39@WTH:buildroot $ git commit -a
+[14:17 0.20] kang39@WTH:buildroot $ git st
+[14:18 0.26] kang39@WTH:buildroot $ git push
+------------------------------------------------------------
+[14:18 0.24] kang39@WTH:buildroot $ cd sierra/
+[14:21 0.27] kang39@WTH:sierra $ cd linux_kernel/
+[14:21 0.25] kang39@WTH:linux_kernel $ git br
+* (HEAD a33253f0b 위치에서 분리됨)
+  linux-release
+[14:21 0.21] kang39@WTH:linux_kernel $ git log
+[14:21 0.26] kang39@WTH:linux_kernel $ git checkout master
+[14:21 0.24] kang39@WTH:linux_kernel $ git log
+[14:21 0.17] kang39@WTH:linux_kernel $ cd ..
+[14:22 0.21] kang39@WTH:sierra $ git st
+[14:22 0.21] kang39@WTH:sierra $ cd ..
+[14:22 0.26] kang39@WTH:buildroot $ git st
+[14:22 0.32] kang39@WTH:buildroot $ git commit -a
+[14:22 0.23] kang39@WTH:buildroot $ git st
+[14:22 0.23] kang39@WTH:buildroot $ git push
+
+
+
+
+
+
+
+
 
 
 [log]
@@ -206,6 +951,25 @@ pc의 tftp 프로그램 기준으로 ./ru_n77_g/ru_n77_g_ap.pkg 을 다운로드
 winscp에서 장비에 /root에 
 pkg -i 파일명<enter>
 reboot
+-----------------------------------------------
+//BL OS
+pkg 명령으로 실행.
+BL과 OS를 동시에 업데이트 하고 reboot해야 함.
+root@oru:~# pkg -i oru_bl.pkg
+Installing the pkg 'oru_bl.pkg'
+sj: Save UDF
+Erasing blocks: 380/380 (100%)
+Writing data: 10k/24273k (0%)sj: Init UDF
+Writing data: 24273k/24273k (100%)
+Verifying data: 24273k/24273k (100%)
+Package successfully installed (BL, v1.1.0)
+root@oru:~# pkg -i oru_os.pkg
+Installing the pkg 'oru_os.pkg'
+Package successfully installed (OS, v1.1.0-8-gf7bb9b7)
+root@oru:~# reboot
+
+
+
 
 [PRIORITY]
 configs>glob_cfg.mk
@@ -306,11 +1070,19 @@ make: *** [all] Error 1
 커밋할 변경 사항을 추가하지 않았습니다 ("git add" 및/또는 "git commit -a"를
 사용하십시오)
 
-//build 후 만들어진 파일은 어디로???
+//build 후 만들어진 파일
 sync_timing_driver/rootfs/usr/bin/ <-- sync driver compile 후 output/binaries/아래 bin 파일을 이곳에 업데이트. Makefile에 의해 자동으로 업데이트 됨.
-sync_timing_driver/rootfs/etc/sync_timing_esmc_default.conf <-- config 파일은 여기에???
+sync_timing_driver/rootfs/etc/sync_timing_esmc_default.conf <-- config 파일은 여기에
 app/oru/rootfs/oru/root/si5518/user_config.boot.bin <-- 이 파일은 무엇?
 https://kangsanggu74-1728864701657.atlassian.net/l/cp/s2vqyARj		<- confluence page 참조
+
+//sync 관련 소스 수정하지 않고 테스트
+-> 새로 적용하고자 하는 config 파일을 같은 이름으로 이동시키고 테스트. 원본은 backup.
+[15:47 0.24] kang39@WTH:np-solid $ grep -r sync * |grep SHELL		//찾기
+app/m-plane/sync_manager/sync_manager.c:    N_SHELL_CMD_ADD("sync", cmd_sync, "sync setting");
+-> sync -r 명령으로 재기동.
+
+
 
 
 root@oru:~# sync_timing_util -P 0 -I 2
@@ -328,6 +1100,9 @@ gSyncTimingUtilInfo.SyncTimingUtilOpn = 22
 ---------- Current PLL Input = SYNC_TIMING_CLOCKADJ_PLL_INPUT_SELECT_IN2
 
 ************************************************************************
+
+* ptp 로그 확인
+tail -f /tmp/synctimingptp2.log
 
 
 [Thread]
@@ -453,12 +1228,18 @@ root@oru:~#
 * MAC address 변경
 ifconfig cpri0 hw ether 98:03:9b:98:7e:da
 
+* /usr/local/bin/netopeer2-server: error while loading shared libraries: libpam.so.0: cannot open shared object file: No such file or directory
+	-. 동적 라이브러리 관련 에러는 os에 문의
 
+* ORU flow bat 파일이 실행되지 않으면, ORS에서 wireshark, log 등을 참고. 장비에선 /media/log/messages 확인, ping이나 netopeer2-server가 실행되고 있는지 확인(ps -ef).
+	-. ssh connection은 netopeer2-server가 listenning?.
+	-. /usr/local/bin/netopeer2-server
+	-. so 파일 위치는 /usr/lib 혹은 /lib/
 
 [Util]
 stat_e1.sh	=> packet count
 <tcpdump>장비에서 실행
-root@oru:~# tcpdump -i cpri0 -w bb
+root@oru:~# tcpdump -i cpri0 -w a051400
 
 [WSL]
 *탐색기
@@ -474,5 +1255,9 @@ Neovim
 ChatGPT
 - ID : samjigpt3@gmail.com 
 - P/W : #!samji01883  
+
+
+[품의]
+\\192.168.50.220\통신개발팀\중계기\SNOO1-44N28\1. 개발비 현황
 
 
